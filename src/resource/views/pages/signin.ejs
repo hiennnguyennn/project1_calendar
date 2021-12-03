@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Sign in</title>
+    <link rel="icon" href="/images/icon_2.png" />
+    <link rel="stylesheet" href="/stylesheets/signin.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Satisfy"
+    />
+    <meta charset="utf-8" />
+  </head>
+
+  <body>
+    <div class="container">
+      <div class="a container1">
+        <h1 id="head1">
+          Welcome to
+          <span
+            style="
+              font-size: 75px;
+              font-style: oblique;
+              font-family: Satisfy;
+              color: #0871ed;
+            "
+            >Calendar</span
+          >
+        </h1>
+        <h2 id="head2">Please enter your personal details</h2>
+        <a href="/register" class="signin"
+          ><button id="button1">SIGN UP</button></a
+        >
+      </div>
+      <div class="a container2">
+        <form
+          id="login-form"
+          action="/login"
+          class="sign-in-form"
+          method="POST"
+        >
+          <h2 class="title">SIGN IN</h2>
+          <div class="input-field">
+            <i class="material-icons">account_circle</i>
+            <input
+              class="input"
+              type="text"
+              name="email"
+              placeholder="Email"
+              required
+            />
+            <div class="line"></div>
+            <div class="d-e">{{ errs }}</div>
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <div class="input-field">
+            <i class="material-icons">lock</i>
+            <input
+              class="input"
+              type="password"
+              name="password"
+              placeholder="Password"
+              required
+            />
+            <div class="line"></div>
+            <div class="d-e">{{ errs }}</div>
+            <i class="fas fa-exclamation-triangle"></i>
+          </div>
+          <input type="submit" value="LOGIN" disabled class="btn transparent" />
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  var inp = document.querySelectorAll('.input');
+  var error = document.querySelectorAll('.d-e');
+  var e = [false, false];
+  const submit = document.querySelector('.btn');
+  const form = document.querySelector('form');
+
+  for (var i = 0; i < inp.length; i++) {
+    inp[i].onfocus = function (e) {
+      e.target.parentElement.classList.remove('error');
+    };
+  }
+
+  function vali(element, index) {
+    if (element.value.length === 0) {
+      element.parentElement.classList.add('error');
+      var x = element.getAttribute('name');
+      x = x[0].toUpperCase() + x.slice(1) + ' must not be null';
+      error[index].innerHTML = x;
+      // element.nextElementSibling.innerHTML = x;
+      e[index] = true;
+      err = true;
+    } else {
+      e[index] = false;
+      err = !!e[1 - index] ? true : false;
+
+      if (!err) {
+        submit.disabled = false;
+        submit.classList.add('active');
+      }
+    }
+  }
+
+  inp.forEach((value, index) => {
+    value.addEventListener('focusout', (e) => {
+      vali(e.target, index);
+    });
+  });
+  form.onsubmit = function (a) {
+    var sub = false;
+    e.forEach(function (value, index) {
+      vali(value, index);
+    });
+
+    if (err) a.preventDefault();
+  };
+</script>
