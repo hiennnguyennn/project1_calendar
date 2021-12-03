@@ -82,7 +82,7 @@ router.post('/login', siteController.handleLogin);
 router.post('/register', siteController.register);
 router.get('/login', siteController.showLogin);
 router.get('/register', siteController.showRegister);
-
+router.get('/home', auth.requireAuth, siteController.home);
 router.get('/', siteController.default);
 
 module.exports = router;
