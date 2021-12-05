@@ -1,9 +1,11 @@
+
+</html>
 <!DOCTYPE html>
 <html>
 
 <head>
   <title>Sign up</title>
-  <link rel="icon" href="/images/icon_2.png" />
+  <link rel="icon" href="/images/iconcalendar.png" />
   <link rel="stylesheet" href="/stylesheets/main.css" />
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
@@ -18,28 +20,40 @@
         <div class="input-field">
           <i class="material-icons">account_circle</i>
           <input class="input" id="username" type="text" placeholder="Username" name="username" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
         </div>
         <div class="input-field">
           <i class="material-icons">email</i>
           <input class="input" id="email" type="email" placeholder="Email" name="email" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
         </div>
         <div class="input-field">
           <i class="material-icons">phone</i>
           <input class="input" id="phone" type="phone" placeholder="Phone Number" name="phone" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
         </div>
         <div class="input-field">
-          <i class="material-icons">phone</i>
-          <input class="input" id="phone" type="date" placeholder="Date of birth" name="dob" required />
+          <i class="material-icons">cake</i>
+          <input class="input" id="phone" type="date" placeholder="Date of birth" name="date of birth" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
         </div>
         <div class="input-field">
           <i class="material-icons">lock</i>
           <input class="input" id="password" type="password" placeholder="Password" name="password" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
         </div>
         <div class="input-field">
           <i class="material-icons">lock</i>
-          <input class="input" id="confirm" type="password" placeholder="Confirm Password" name="confirm" />
+          <input class="input" id="confirm" type="password" placeholder="Confirm Password" name="confirm" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
         </div>
-        <input type="submit" class="btn transparent" value="SIGN UP" />
+        <input type="submit" class="btn transparent" value="SIGN UP" disabled />
       </form>
     </div>
     <div class="ctn container2">
@@ -53,3 +67,60 @@
 </body>
 
 </html>
+<script>
+
+  var inp = document.querySelectorAll('.input');
+  var error = document.querySelectorAll('.d-e');
+  var e = [false, false, false, false, false];
+  const submit = document.querySelector('.btn');
+  const form = document.querySelector('form');
+  var count = 0;
+
+  for (var i = 0; i < inp.length; i++) {
+    inp[i].onfocus = function (e) {
+      e.target.parentElement.classList.remove('error');
+    };
+  }
+
+  function vali(element, index) {
+    if (element.value.length === 0) {
+      element.parentElement.classList.add('error');
+      var x = element.getAttribute('name');
+      x = x[0].toUpperCase() + x.slice(1) + ' must not be null';
+      error[index].innerHTML = x;
+      // element.nextElementSibling.innerHTML = x;
+      e[index] = true;
+      err = true;
+
+    } else {
+      for (var i = 0; i < index; i++) {
+        if (e[i] == true) {
+          err = true;
+        }
+      }
+      err = false;
+
+      if (!err && index == 4) {
+        submit.disabled = false;
+        submit.classList.add('active');
+      }
+    }
+  }
+
+  inp.forEach((value, index) => {
+    value.addEventListener('focusout', (e) => {
+      vali(e.target, index);
+    });
+  });
+  form.onsubmit = function (a) {
+    e.forEach(function (value, index) {
+      vali(value, index);
+    });
+
+    if (err) a.preventDefault();
+  };
+
+
+
+</script>
+
