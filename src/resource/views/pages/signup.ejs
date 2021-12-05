@@ -1,110 +1,55 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Sign up</title>
-    <link rel="icon" href="/images/icon_2.png" />
-    <link rel="stylesheet" href="/stylesheets/main.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Satisfy"
-    />
-    <meta charset="utf-8" />
-  </head>
 
-  <body>
-    <div class="container">
-      <div class="ctn container1">
-        <form
-          action="/register"
-          id="register-form"
-          class="sign-up-form"
-          method="POST"
-        >
-          <div class="input-field">
-            <i class="material-icons">account_circle</i>
-            <input
-              class="input"
-              id="username"
-              type="text"
-              placeholder="Username"
-              name="username"
-              required
-            />
-          </div>
-          <div class="input-field">
-            <i class="material-icons">email</i>
-            <input
-              class="input"
-              id="email"
-              type="email"
-              placeholder="Email"
-              name="email"
-              required
-            />
-          </div>
-          <div class="input-field">
-            <i class="material-icons">phone</i>
-            <input
-              class="input"
-              id="phone"
-              type="phone"
-              placeholder="Phone Number"
-              name="phone"
-              required
-            />
-          </div>
-          <div class="input-field">
-            <i class="material-icons">phone</i>
-            <input
-              class="input"
-              id="phone"
-              type="date"
-              placeholder="Date of birth"
-              name="dob"
-              required
-            />
-          </div>
-          <div class="input-field">
-            <i class="material-icons">lock</i>
-            <input
-              class="input"
-              id="password"
-              type="password"
-              placeholder="Password"
-              name="password"
-              required
-            />
-          </div>
-          <div class="input-field">
-            <i class="material-icons">lock</i>
-            <input
-              class="input"
-              id="confirm"
-              type="password"
-              placeholder="Confirm Password"
-              name="confirm"
-            />
-          </div>
-          <input type="submit" class="btn transparent" value="SIGN UP" />
-        </form>
-      </div>
-      <div class="ctn container2">
-        <h1 id="head1">Welcome Back!</h1>
-        <h2 id="head2">
-          To keep connected with us please login with your personal info
-        </h2>
-        <a href="/views/signin.html" class="signin"
-          ><button id="button1">SIGN IN</button></a
-        >
-      </div>
+<head>
+  <title>Sign up</title>
+  <link rel="icon" href="/images/icon_2.png" />
+  <link rel="stylesheet" href="/stylesheets/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Satisfy" />
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="ctn container1">
+      <form action="/register" id="register-form" class="sign-up-form" method="POST">
+        <div class="input-field">
+          <i class="material-icons">account_circle</i>
+          <input class="input" id="username" type="text" placeholder="Username" name="username" required />
+        </div>
+        <div class="input-field">
+          <i class="material-icons">email</i>
+          <input class="input" id="email" type="email" placeholder="Email" name="email" required />
+        </div>
+        <div class="input-field">
+          <i class="material-icons">phone</i>
+          <input class="input" id="phone" type="phone" placeholder="Phone Number" name="phone" required />
+        </div>
+        <div class="input-field">
+          <i class="material-icons">phone</i>
+          <input class="input" id="phone" type="date" placeholder="Date of birth" name="dob" required />
+        </div>
+        <div class="input-field">
+          <i class="material-icons">lock</i>
+          <input class="input" id="password" type="password" placeholder="Password" name="password" required />
+        </div>
+        <div class="input-field">
+          <i class="material-icons">lock</i>
+          <input class="input" id="confirm" type="password" placeholder="Confirm Password" name="confirm" />
+        </div>
+        <input type="submit" class="btn transparent" value="SIGN UP" />
+      </form>
     </div>
-  </body>
+    <div class="ctn container2">
+      <h1 id="head1">Welcome Back!</h1>
+      <h2 id="head2">
+        To keep connected with us please login with your personal info
+      </h2>
+      <a href="/login" class="signin"><button id="button1">SIGN IN</button></a>
+    </div>
+  </div>
+</body>
+
 </html>
