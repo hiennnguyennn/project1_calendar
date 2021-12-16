@@ -154,3 +154,8 @@ text-align: center;
 font-size: 2.5rem;
 cursor: pointer;
 }
+
+.today{
+    background-color:rgba(192, 239, 246, 1);
+    
+  }
