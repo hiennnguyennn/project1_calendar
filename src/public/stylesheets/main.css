@@ -75,3 +75,13 @@ body {
   padding-left: 15px;
   margin-left: 15px;
 }
+.error .d-e {
+  display: block;
+}
+form .d-e {
+  margin-top: 0px;
+  font-size: 14px;
+  color: red;
+  margin-left: 0px;
+  display: none;
+}

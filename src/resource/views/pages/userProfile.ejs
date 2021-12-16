@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet" />
+    <link rel="stylesheet" href="/stylesheets/user.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
+</head>
+
+<body>
+    <%- include('../partials/header'); %>
+
+        <div class="container">
+
+            <div class="ctn container1">
+                <div class="info username"></div>
+                <div class="info email"></div>
+                <div class="info phone"></div>
+                <button class="button">Follow</button>
+            </div>
+            <div class="ctn container2">
+                <div class="month">
+                    <i class="fas fa-angle-left prev"></i>
+                    <div class="week">
+                        <h2></h2>
+                    </div>
+                    <i class="fas fa-angle-right next"></i>
+                </div>
+
+                <div class="table">
+                    <table bgcolor="white">
+                        <thead>
+                            <tr class="head">
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+
+
+            </div>
+</body>
+
+</html>
+
+
+<script>
+    const date = new Date();
+
+const renderCalendar = () => {
+  console.log(date);
+  const lastDay = new Date(
+    date.getFullYear(),
+    date.getMonth() + 1,
+    0
+  ).getDate();
+  const prevLastDay = new Date(
+    date.getFullYear(),
+    date.getMonth(),
+    0
+  ).getDate();
+
+
+  const months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+  let date1 = "<th></th>";
+  var check1 = false;
+  var check2 = false;
+  var sunday = null;
+  var saturday = null;
+  for (let j = 0; j < 7; j++) {
+    var i = date.getDate() - date.getDay() + j;
+    if (i <= 0) {
+      date1 += `<th class="date">${prevLastDay + i}</th>`;
+
+      if (j == 0) {
+        sunday = prevLastDay + i;
+        check1 = true;
+      }
+    } else if (i > lastDay) {
+      date1 += `<th class="date">${i - lastDay}</th>`;
+      if (j == 6) {
+        saturday = i - lastDay;
+        check2 = true;
+      }
+    } else {
+      if (i === new Date().getDate() &&
+        date.getMonth() === new Date().getMonth()) {
+        date1 += `<th class="date today">${i}</th>`;
+      } else {
+        date1 += `<th class="date">${i}</th>`;
+      }
+
+      if (j == 0) {
+        sunday = i;
+      }
+      if (j == 6) {
+        saturday = i;
+      }
+    }
+  }
+  if (check1) {
+    if (date.getMonth() == 0) {
+      document.querySelector("h2").innerHTML
+        = months[(date.getMonth()) % 12] + ' ' + sunday  + ' , ' + date.getFullYear() + ' - '
+        + months[(date.getMonth() - 1) % 12] + ' ' + saturday + ' , ' + (date.getFullYear() - 1);
+
+    } else{
+      document.querySelector("h2").innerHTML
+      = months[(date.getMonth() - 1) % 12] + ' ' + sunday + ' - ' + months[(date.getMonth()) % 12] + ' ' + saturday + ' , ' + date.getFullYear();
+    }
+    
+  } else if (check2) {
+    if (date.getMonth() == 11) {
+      document.querySelector("h2").innerHTML
+        = months[(date.getMonth()) % 12] + ' ' + sunday  + ' , ' + date.getFullYear() + ' - '
+        + months[(date.getMonth() + 1) % 12] + ' ' + saturday + ' , ' + (date.getFullYear() + 1);
+
+    } else {
+      document.querySelector("h2").innerHTML
+        = months[(date.getMonth()) % 12] + ' ' + sunday + ' - ' + months[(date.getMonth() + 1) % 12] + ' ' + saturday + ' , ' + date.getFullYear();
+    }
+
+
+  } else {
+    document.querySelector("h2").innerHTML
+      = months[date.getMonth()] + ' ' + sunday + ' - ' + saturday + ' , ' + date.getFullYear();
+  }
+
+
+
+  document.querySelector(".head").innerHTML = date1;
+
+  let date2 = "";
+  for (let j = 0; j < 24; j++) {
+
+    date2 += `<tr>
+      <td class="Col">${j}:00</td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+  </tr>`
+  }
+  document.querySelector("tbody").innerHTML = date2;
+
+};
+renderCalendar();
+
+document.querySelector('.prev').addEventListener("click", () => {
+  date.setDate(date.getDate() - 7);
+  renderCalendar();
+});
+
+document.querySelector('.next').addEventListener("click", () => {
+  date.setDate(date.getDate() + 7);
+  renderCalendar();
+});
+
+var button = document.querySelector('.button');
+button.addEventListener("click", () => {
+  if (button.innerHTML == 'Follow') {
+    button.innerHTML = `Unfollow`;
+    button.style.backgroundColor = 'rgba(45, 192, 104, 0.6)';
+  } else {
+    button.innerHTML = `Follow`;
+    button.style.backgroundColor = 'rgba(45, 192, 104, 1)'
+  }
+});
+</script>

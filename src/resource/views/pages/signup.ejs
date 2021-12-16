@@ -1,110 +1,126 @@
+
+</html>
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Sign up</title>
-    <link rel="icon" href="/images/icon_2.png" />
-    <link rel="stylesheet" href="/stylesheets/main.css" />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Satisfy"
-    />
-    <meta charset="utf-8" />
-  </head>
 
-  <body>
-    <div class="container">
-      <div class="ctn container1">
-        <form
-          action="/register"
-          id="register-form"
-          class="sign-up-form"
-          method="POST"
-        >
-          <div class="input-field">
-            <i class="material-icons">account_circle</i>
-            <input
-              class="input"
-              id="username"
-              type="text"
-              placeholder="Username"
-              name="username"
-              required
-            />
-          </div>
-          <div class="input-field">
-            <i class="material-icons">email</i>
-            <input
-              class="input"
-              id="email"
-              type="email"
-              placeholder="Email"
-              name="email"
-              required
-            />
-          </div>
-          <div class="input-field">
-            <i class="material-icons">phone</i>
-            <input
-              class="input"
-              id="phone"
-              type="phone"
-              placeholder="Phone Number"
-              name="phone"
-              required
-            />
-          </div>
-          <div class="input-field">
-            <i class="material-icons">phone</i>
-            <input
-              class="input"
-              id="phone"
-              type="date"
-              placeholder="Date of birth"
-              name="dob"
-              required
-            />
-          </div>
-          <div class="input-field">
-            <i class="material-icons">lock</i>
-            <input
-              class="input"
-              id="password"
-              type="password"
-              placeholder="Password"
-              name="password"
-              required
-            />
-          </div>
-          <div class="input-field">
-            <i class="material-icons">lock</i>
-            <input
-              class="input"
-              id="confirm"
-              type="password"
-              placeholder="Confirm Password"
-              name="confirm"
-            />
-          </div>
-          <input type="submit" class="btn transparent" value="SIGN UP" />
-        </form>
-      </div>
-      <div class="ctn container2">
-        <h1 id="head1">Welcome Back!</h1>
-        <h2 id="head2">
-          To keep connected with us please login with your personal info
-        </h2>
-        <a href="/views/signin.html" class="signin"
-          ><button id="button1">SIGN IN</button></a
-        >
-      </div>
+<head>
+  <title>Sign up</title>
+  <link rel="icon" href="/images/iconcalendar.png" />
+  <link rel="stylesheet" href="/stylesheets/main.css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Satisfy" />
+  <meta charset="utf-8" />
+</head>
+
+<body>
+  <div class="container">
+    <div class="ctn container1">
+      <form action="/register" id="register-form" class="sign-up-form" method="POST">
+        <div class="input-field">
+          <i class="material-icons">account_circle</i>
+          <input class="input" id="username" type="text" placeholder="Username" name="username" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="input-field">
+          <i class="material-icons">email</i>
+          <input class="input" id="email" type="email" placeholder="Email" name="email" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="input-field">
+          <i class="material-icons">phone</i>
+          <input class="input" id="phone" type="phone" placeholder="Phone Number" name="phone" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="input-field">
+          <i class="material-icons">cake</i>
+          <input class="input" id="phone" type="date" placeholder="Date of birth" name="date of birth" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="input-field">
+          <i class="material-icons">lock</i>
+          <input class="input" id="password" type="password" placeholder="Password" name="password" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <div class="input-field">
+          <i class="material-icons">lock</i>
+          <input class="input" id="confirm" type="password" placeholder="Confirm Password" name="confirm" required />
+          <div class="d-e">{{ errs }}</div>
+          <i class="fas fa-exclamation-triangle"></i>
+        </div>
+        <input type="submit" class="btn transparent" value="SIGN UP" disabled />
+      </form>
     </div>
-  </body>
+    <div class="ctn container2">
+      <h1 id="head1">Welcome Back!</h1>
+      <h2 id="head2">
+        To keep connected with us please login with your personal info
+      </h2>
+      <a href="/login" class="signin"><button id="button1">SIGN IN</button></a>
+    </div>
+  </div>
+</body>
+
 </html>
+<script>
+
+  var inp = document.querySelectorAll('.input');
+  var error = document.querySelectorAll('.d-e');
+  var e = [false, false, false, false, false];
+  const submit = document.querySelector('.btn');
+  const form = document.querySelector('form');
+  var count = 0;
+
+  for (var i = 0; i < inp.length; i++) {
+    inp[i].onfocus = function (e) {
+      e.target.parentElement.classList.remove('error');
+    };
+  }
+
+  function vali(element, index) {
+    if (element.value.length === 0) {
+      element.parentElement.classList.add('error');
+      var x = element.getAttribute('name');
+      x = x[0].toUpperCase() + x.slice(1) + ' must not be null';
+      error[index].innerHTML = x;
+      // element.nextElementSibling.innerHTML = x;
+      e[index] = true;
+      err = true;
+
+    } else {
+      for (var i = 0; i < index; i++) {
+        if (e[i] == true) {
+          err = true;
+        }
+      }
+      err = false;
+
+      if (!err && index == 4) {
+        submit.disabled = false;
+        submit.classList.add('active');
+      }
+    }
+  }
+
+  inp.forEach((value, index) => {
+    value.addEventListener('focusout', (e) => {
+      vali(e.target, index);
+    });
+  });
+  form.onsubmit = function (a) {
+    e.forEach(function (value, index) {
+      vali(value, index);
+    });
+
+    if (err) a.preventDefault();
+  };
+
+
+
+</script>
+
