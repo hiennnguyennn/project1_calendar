@@ -51,6 +51,10 @@
   font-weight: 500;
 }
 
-.header h4 {
+.header h5 {
+  margin: 0;
   font-weight: 400;
+}
+.header a {
+  text-decoration: none !important;
 }

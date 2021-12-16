@@ -51,7 +51,7 @@ class SiteController {
                 }
               );
               res.cookie('token', token);
-              res.send(token);
+              res.redirect('/home');
             } else res.status(401).send('wrong password');
           });
         } else res.status(404).send('account not found');
