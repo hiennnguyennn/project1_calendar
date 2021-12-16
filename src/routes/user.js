@@ -29,7 +29,7 @@ const userController = require('../app/controller/UserController');
 /**
  * @swagger
  * /user/me/update:
- *   put:
+ *   post:
  *     description: Update
  *     tags: [UserInfo]
  *     requestBody:
@@ -58,32 +58,7 @@ const userController = require('../app/controller/UserController');
  *       409:
  *         description: Conflig
  */
-router.put('/me/update', userController.updateProfile);
-
-/**
- * @swagger
- * /user/{id}:
- *   get:
- *     description: Get the user by id
- *     tags: [UserInfo]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *           type: number
- *         required: true
- *         description: The user id
- *     responses:
- *       200:
- *         description: The user description by id
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/UserInfo'
- *       404:
- *         description: The user was not found
- */
-router.get('/:id', userController.profile);
+router.post('/me/update', userController.updateProfile);
 
 /**
  * @swagger
@@ -158,5 +133,29 @@ router.get('/me', userController.myProfile);
 router.put('/me/changePassword', userController.changePassword);
 
 router.get('/logout', userController.logout);
+/**
+ * @swagger
+ * /user/{id}:
+ *   get:
+ *     description: Get the user by id
+ *     tags: [UserInfo]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: number
+ *         required: true
+ *         description: The user id
+ *     responses:
+ *       200:
+ *         description: The user description by id
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/UserInfo'
+ *       404:
+ *         description: The user was not found
+ */
+router.get('/:id', userController.profile);
 
 module.exports = router;

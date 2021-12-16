@@ -17,23 +17,20 @@ class UserController {
     //     res.send(result);
     //   } else res.status(404).send('not found');
     // });
+
     res.render('pages/userProfile');
   }
   async findUserWithEmail(emails) {
     await User.find({ email: { $in: emails } }).then((users) => {
-      console.log(users);
       return users;
     });
   }
-  myProfile(req, res, next) {
-    User.findOne({ _id: req.user._id }).then((u) => {
-      let result;
-      result = Object.assign(
-        {},
-        { username: u.username, email: u.email, dob: u.dob, phone: u.phone }
-      );
-      res.send(result);
-    });
+
+  async myProfile(req, res, next) {
+    let u = (await User.findOne({ _id: req.user._id })).toObject();
+
+    u.dob = u.dob.toISOString().substring(0, 10);
+    res.render('pages/myProfile', { u });
   }
   logout(req, res) {
     res.clearCookie('token');
@@ -42,7 +39,7 @@ class UserController {
   updateProfile(req, res) {
     req.body['updatedAt'] = new Date();
     User.updateOne({ _id: req.user._id }, req.body).then((u) => {
-      res.send(u);
+      res.redirect('/user/me');
     });
   }
   changePassword(req, res, next) {
@@ -63,7 +60,6 @@ class UserController {
     });
   }
   async follow(req, res, next) {
-    console.log(req.user);
     if (req.params.id === req.user._id) res.status(409).send('not found');
     User.findOne({ _id: req.params.id }).then(async (u) => {
       if (u) {

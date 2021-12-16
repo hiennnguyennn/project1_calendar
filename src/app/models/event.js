@@ -12,9 +12,8 @@ const Event = new Schema(
     private: Boolean,
     created_useId: Number,
     userId: Number,
-    eventId: String,
     status: Number,
-    //0: pending, 1:active
+    //0: pending, 1:active,2 :done
   },
   {
     _id: false,

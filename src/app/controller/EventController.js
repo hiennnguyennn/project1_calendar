@@ -28,20 +28,20 @@ class EventController {
       req.body['status'] = 1;
       const e = new Event(req.body);
       e.save().then((e1) => {
-        if (req.body.usersEmail.length > 0) {
-          User.find({ email: { $in: req.body.usersEmail } }).then(
-            async (users) => {
-              if (users.length > 0) {
-                for (var i = 0; i < users.length; i++) {
-                  req.body['userId'] = users[i]._id;
-                  req.body['status'] = 0;
-                  const x = new Event(req.body);
-                  await x.save();
-                }
-              }
-            }
-          );
-        }
+        // if (req.body.usersEmail.length > 0) {
+        //   User.find({ email: { $in: req.body.usersEmail } }).then(
+        //     async (users) => {
+        //       if (users.length > 0) {
+        //         for (var i = 0; i < users.length; i++) {
+        //           req.body['userId'] = users[i]._id;
+        //           req.body['status'] = 0;
+        //           const x = new Event(req.body);
+        //           await x.save();
+        //         }
+        //       }
+        //     }
+        //   );
+        // }
         res.send(e1);
       });
     });
@@ -110,6 +110,55 @@ class EventController {
       if (e) res.send(e);
       else res.status(404).send('not found');
     });
+  }
+  async importEvent(req, res, next) {
+    const e = await Event.findOne({ _id: req.params.id });
+    if (!e) {
+      res.status(404).send('NOT FOUND');
+      return;
+    }
+    if (e.private) {
+      res.send('CANNOT IMPORT');
+      return;
+    }
+    //  if(e['created_useId']===req.user._id)
+    let data = {};
+    data.start = new Date(e.start);
+    data.end = new Date(e.end);
+    console.log(data.start);
+    let tmp = true;
+    await Event.find({ userId: req.user._id }).then((events) => {
+      console.log(events);
+      if (events.length > 0) {
+        var range = moment().range(data.start, data.end);
+        console.log(req.user._id, range);
+        for (var i = 0; i < events.length; i++) {
+          if (
+            range.contains(new Date(events[i].start)) ||
+            range.contains(new Date(events[i].end))
+          ) {
+            tmp = false;
+            res.status(409).send('conflig');
+            return;
+          }
+        }
+      }
+    });
+    console.log(tmp);
+    if (tmp) {
+      data['created_useId'] = e['created_useId'];
+      data['userId'] = req.user._id;
+      data['status'] = 1;
+      data['name'] = e.name;
+      data['location'] = e.location;
+      data['description'] = e.description;
+      data['private'] = e.private;
+      data['status'] = e.status;
+      const newEvent = new Event(data);
+      newEvent.save().then((e1) => {
+        res.send(e1);
+      });
+    }
   }
 }
 module.exports = new EventController();
