@@ -1,24 +1,29 @@
 const bcrypt = require('bcrypt');
 let User = require('../models/user');
+let Follow = require('../models/follow');
 
 class UserController {
   home(req, res) {
-    //res.json(req.user)
     res.render('home', { username: req.user.username });
   }
-  profile(req, res, next) {
-    // User.findOne({ _id: req.params.id }).then((u) => {
-    //   if (u) {
-    //     let result;
-    //     result = Object.assign(
-    //       {},
-    //       { username: u.username, email: u.email, dob: u.dob, phone: u.phone }
-    //     );
-    //     res.send(result);
-    //   } else res.status(404).send('not found');
-    // });
-
-    res.render('pages/userProfile');
+  async profile(req, res, next) {
+    if (req.query.email === req.user.email) {
+      res.status(409).send('You cannot ');
+      return;
+    }
+    let user = await User.findOne({ email: req.query.email });
+    if (user) {
+      user = user.toObject();
+      delete user.password;
+      user.dob = user.dob.toISOString().substring(0, 10);
+      let follow = await Follow.findOne({
+        userId1: req.user._id,
+        userId2: user._id,
+      });
+      if (follow && follow.status == 1)
+        res.render('pages/userProfile', { u: user, follow: 1 });
+      else res.render('pages/userProfile', { u: user, follow: 0 });
+    } else res.status(404).send('not found');
   }
   async findUserWithEmail(emails) {
     await User.find({ email: { $in: emails } }).then((users) => {
@@ -60,17 +65,26 @@ class UserController {
     });
   }
   async follow(req, res, next) {
-    if (req.params.id === req.user._id) res.status(409).send('not found');
-    User.findOne({ _id: req.params.id }).then(async (u) => {
-      if (u) {
-        u.follower.push(req.user._id);
-        await u.save();
-        req.user.following.push(u._id);
-        await User.updateOne({ _id: req.user._id }, req.user);
-        res.send('success');
-        ``;
-      } else res.status(404).send('not found user');
+    const u = await User.findOne({ _id: req.params.id });
+    let f = await Follow.findOne({
+      userId1: req.user._id,
+      userId2: req.params.id,
     });
+
+    if (f) {
+      f.status = 1 - f.status;
+      await f.save();
+    } else {
+      let follow = {};
+      follow['userId1'] = req.user._id;
+      follow['userId2'] = req.params.id;
+      follow['status'] = 1;
+      follow = new Follow(follow);
+
+      await follow.save();
+    }
+
+    res.redirect(`/user?email=${u.email}`);
   }
 }
 module.exports = new UserController();

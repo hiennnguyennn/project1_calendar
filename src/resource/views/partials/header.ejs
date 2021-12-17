@@ -5,8 +5,8 @@
     <img src="/images/iconcalendar.png" />
     <h3>Calendar</h3>
   </div>
-
-  <input type="text" placeholder="Enter your friend's email here" />
+<form class="find">
+  <input name="email" class="findEmail" type="text" placeholder="Enter your friend's email here" /></form>
   <ul>
     <li>
       <img src="/images/home.png" />
@@ -22,3 +22,21 @@
     </li>
   </ul>
 </div>
+<script>
+const form=document.querySelector('.find');
+const input=document.querySelector('.findEmail');
+form.addEventListener('submit',function(e){
+  console.log(123)
+  e.preventDefault()
+})
+input.addEventListener("keyup", function(event) {
+
+  if(event.keyCode===13){
+    const value=event.target.value;
+    const href=`/user?email=${value}`;
+    console.log(value,href)
+
+   window.location.replace(href)
+  }
+})
+</script>

@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Follow = require('../models/follow');
 const bcrypt = require('bcrypt');
 var jwt = require('jsonwebtoken');
 const saltRounds = 10;
@@ -67,8 +68,21 @@ class SiteController {
   default(req, res, next) {
     res.render('pages/login');
   }
-  home(req, res, next) {
-    res.render('pages/home');
+  async home(req, res, next) {
+    const u = await User.findOne({ _id: req.user._id });
+    let follow = await Follow.find({ user1: req.user._id, status: 1 });
+
+    let listFollowing = [];
+    for (var i = 0; i < follow.length; i++) {
+      let user = await User.findOne({ _id: follow[i].userId2 });
+      user = Object.assign(
+        {},
+        { username: user.username, _id: user._id, email: user.email }
+      );
+      listFollowing.push(user);
+    }
+    console.log(listFollowing);
+    res.render('pages/home', { user: u, listFollowing: listFollowing });
   }
 }
 module.exports = new SiteController();

@@ -19,10 +19,12 @@
         <div class="container">
 
             <div class="ctn container1">
-                <div class="info username"></div>
-                <div class="info email"></div>
-                <div class="info phone"></div>
-                <button class="button">Follow</button>
+                <div class="info username"><%= u.username  %></div>
+                <div class="info email">Email: <%= u.email  %></div>
+                <div class="info phone">Phone: <%= u.phone  %></div>
+                <div class="info dob">Date of birth: <%= u.dob  %></div>
+                <form class="follow" action="/user/follow/<%= u._id  %>" method="post">
+                <button class="button">Follow</button></form>
             </div>
             <div class="ctn container2">
                 <div class="month">
@@ -53,7 +55,7 @@
 
 <script>
     const date = new Date();
-
+const name="<%= u.username  %>";console.log(name)
 const renderCalendar = () => {
   console.log(date);
   const lastDay = new Date(
@@ -180,13 +182,18 @@ document.querySelector('.next').addEventListener("click", () => {
 });
 
 var button = document.querySelector('.button');
-button.addEventListener("click", () => {
-  if (button.innerHTML == 'Follow') {
-    button.innerHTML = `Unfollow`;
-    button.style.backgroundColor = 'rgba(45, 192, 104, 0.6)';
-  } else {
-    button.innerHTML = `Follow`;
-    button.style.backgroundColor = 'rgba(45, 192, 104, 1)'
-  }
-});
+var follow="<%= follow  %>";follow=Number(follow);
+if(follow===1){
+  button.innerHTML = `Unfollow`;
+}
+else if(follow===0)  button.innerHTML = `Follow`;
+// button.addEventListener("click", () => {
+//   if (button.innerHTML == 'Follow') {
+//     button.innerHTML = `Unfollow`;
+//     button.style.backgroundColor = 'rgba(45, 192, 104, 0.6)';
+//   } else {
+//     button.innerHTML = `Follow`;
+//     button.style.backgroundColor = 'rgba(45, 192, 104, 1)'
+//   }
+// });
 </script>

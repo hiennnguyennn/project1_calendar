@@ -135,20 +135,20 @@ router.put('/me/changePassword', userController.changePassword);
 router.get('/logout', userController.logout);
 /**
  * @swagger
- * /user/{id}:
+ * /user:
  *   get:
- *     description: Get the user by id
+ *     description: Get the user by email
  *     tags: [UserInfo]
  *     parameters:
- *       - in: path
- *         name: id
+ *       - in: query
+ *         name: email
  *         schema:
- *           type: number
+ *           type: string
  *         required: true
- *         description: The user id
+ *         description: The user email
  *     responses:
  *       200:
- *         description: The user description by id
+ *         description: The user description by email
  *         content:
  *           application/json:
  *             schema:
@@ -156,6 +156,6 @@ router.get('/logout', userController.logout);
  *       404:
  *         description: The user was not found
  */
-router.get('/:id', userController.profile);
+router.get('/', userController.profile);
 
 module.exports = router;

@@ -9,8 +9,6 @@ const User = new Schema(
     email: { type: String },
     phone: { type: Number },
     dob: { type: Date },
-    following: { type: [Number], default: [] },
-    follower: { type: [Number], default: [] },
   },
   {
     _id: false,

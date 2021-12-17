@@ -45,7 +45,7 @@
           <span class="month-picker" id="month-picker">February</span>
           <div class="year-picker">
             <span class="year-change" id="prev-year">
-              <pre><</pre>
+              <pre></pre>
             </span>
             <span id="year">2021</span>
             <span class="year-change" id="next-year">
@@ -105,13 +105,17 @@
         <button class="export-button"><span>Export</span></button>
       </div>
       <div class="subscriber">
-        <ul class="Subscriber-List">
-          <span>
-            Subscriber List
-            <li><button id="user1">abc</button></li>
-            <br />
-            <li><button id="user2">usernameaaa</button></li>
-          </span>
+        <span class="Subscriber-List"> Subscriber List</span>
+        <ul>
+          <% listFollowing.forEach(function(u){ %>
+          <li>
+            <a
+              style="text-decoration: none; color: #404040"
+              href="/user?email=<%= u.email %>"
+              ><%= u.username %></a
+            >
+          </li>
+          <% }); %>
         </ul>
       </div>
     </div>
