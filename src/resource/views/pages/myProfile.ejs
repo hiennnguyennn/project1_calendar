@@ -1,104 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
-      integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
-      crossorigin="anonymous"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Satisfy"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="/stylesheets/myProfile.css" />
-    <title>Document</title>
-  </head>
-  <body>
-    <%- include('../partials/header'); %>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+    integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous" />
+  <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" />
+  <link rel="stylesheet" href="/stylesheets/myProfile.css" />
+  <title>My Profile</title>
+</head>
+
+<body>
+  <%- include('../partials/header'); %>
     <div class="contain">
-    <form id="form" class="content" method="post" action="/user/me/update">
-      <h2>Personal Information</h2>
-      <p>
-        Basic information, like your name and mail, that you use to across
-        CalendarWeb services
-      </p>
-      <div class="info">
-        <h4>Basic information</h4>
+      <form id="form" class="content" method="post" action="/user/me/update">
+        <h2>Personal Information</h2>
         <p>
-          Some information may be visible to others using CalendarWeb services,
-          looking for more information
+          Basic information, like your name and mail, that you use to across
+          CalendarWeb services
         </p>
-        <table class="table">
-          <tbody>
-            <tr>
-              <th scope="row">Name</th>
-              <td><input type="text" name="username" value="<%= u.username %>"></td>
-              <td><i class="fas fa-user-cog"></i></td>
-            </tr>
-            <tr>
-              <th scope="row">Date of Birth</th>
-              <td><input type="date" name= "dob" value="<%= u.dob %>"></td>
-              <td><i class="fas fa-birthday-cake"></i></td>
-            </tr>
-           
-          </tbody>
-        </table>
-      </div>
-      <div class="info">
-        <h4>Contact information</h4>
-        <p>
-          Some information may be visible to others using CalendarWeb services,
-          can contact with you
-        </p>
-        <table class="table">
-          <tbody>
-            <tr>
-              <th scope="row">Email</th>
-              <td><input type="email" value="<%= u.email %>" disabled></td>
-              <td><i class="far fa-envelope"></i></td>
-            </tr>
-            <tr>
-              <th scope="row">Phone</th>
-              <td><input type="text" name="phone" value="<%= u.phone %>"></td>
-              <td><i class="fas fa-phone"></i></td>
-            </tr>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <div class="buttons">
-        <button class="cancel"><a href="">Cancel</a></button>
-        <button class="update" type="submit" form="form" value="Submit">Update</button>
-      </div>
-     
+        <div class="info">
+          <h4>Basic information</h4>
+          <p>
+            Some information may be visible to others using CalendarWeb services,
+            looking for more information
+          </p>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">Name</th>
+                <td><input type="text" name="username" value="<%= u.username %>"></td>
+                <td><i class="fas fa-user-cog"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">Date of Birth</th>
+                <td><input type="date" name="dob" value="<%= u.dob %>"></td>
+                <td><i class="fas fa-birthday-cake"></i></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <div class="info">
+          <h4>Contact information</h4>
+          <p>
+            Some information may be visible to others using CalendarWeb services,
+            can contact with you
+          </p>
+          <table class="table">
+            <tbody>
+              <tr>
+                <th scope="row">Email</th>
+                <td><input type="email" value="<%= u.email %>" disabled></td>
+                <td><i class="far fa-envelope"></i></td>
+              </tr>
+              <tr>
+                <th scope="row">Phone</th>
+                <td><input type="text" name="phone" value="<%= u.phone %>"></td>
+                <td><i class="fas fa-phone"></i></td>
+              </tr>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="buttons">
+          <button class="cancel"><a href="">Cancel</a></button>
+          <button class="update" type="submit" form="form" value="Submit">Update</button>
+        </div>
+
     </div>
-</div>
-  </body>
+    </div>
+</body>
+
 </html>
 <script>
 
 </script>
-<script
-  src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
-  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
-  crossorigin="anonymous"
-></script>
-<script
-  src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
-  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
-  crossorigin="anonymous"
-></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+  integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+  integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+  integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>

@@ -121,8 +121,8 @@ const renderCalendar = () => {
   if (check1) {
     if (date.getMonth() == 0) {
       document.querySelector("h2").innerHTML
-        = months[(date.getMonth()) % 12] + ' ' + sunday  + ' , ' + date.getFullYear() + ' - '
-        + months[(date.getMonth() - 1) % 12] + ' ' + saturday + ' , ' + (date.getFullYear() - 1);
+        = months[(date.getMonth() + 11)] + ' ' + sunday + ' , ' + (date.getFullYear() - 1)+ ' - '
+        + months[(date.getMonth()) % 12] + ' ' + saturday  + ' , ' + date.getFullYear() ;
 
     } else{
       document.querySelector("h2").innerHTML
