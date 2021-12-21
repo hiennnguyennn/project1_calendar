@@ -1,396 +1,340 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Satisfy"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Satisfy"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css?family=Merienda"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
-    />
 
-    <link rel="stylesheet" href="/stylesheets/home.css" />
-    <link rell="stylesheet" href="/stylesheets/style.css" />
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-    />
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-  </head>
-  <body>
-    <%- include('../partials/header'); %>
-    <div class="container1">
-      <div class="calendar">
-        <div class="calendar-header">
-          <span class="month-picker" id="month-picker">February</span>
-          <div class="year-picker">
-            <span class="year-change" id="prev-year">
-              <pre></pre>
-            </span>
-            <span id="year">2021</span>
-            <span class="year-change" id="next-year">
-              <pre>></pre>
-            </span>
-          </div>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet" />
+    <link rel="stylesheet" href="/stylesheets/home.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" />
+</head>
+
+<body>
+  <%- include('../partials/header'); %>
+
+    <div class="container">
+
+        <div class="ctn container1">
+            <div class="calendar">
+                <div class="month1">
+                    <i class="fas fa-angle-left prev1"></i>
+                    <div class="date">
+                        <h1></h1>
+                        <p></p>
+                    </div>
+                    <i class="fas fa-angle-right next1"></i>
+                </div>
+                <div class="weekdays">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
+                </div>
+                <div class="days"></div>
+            </div>
+            <div class="my-calendar">
+                <span>My Calendar </span>
+                <button class="export-button"><span>Export</span></button>
+            </div>
+            <div class="subscriber">
+                <span>Subscriber List</span>
+                <ul class="Subscriber-List">
+
+                </ul>
+            </div>
         </div>
-        <div class="calendar-body">
-          <div class="calendar-week-day">
-            <div>Sun</div>
-            <div>Mon</div>
-            <div>Tue</div>
-            <div>Wed</div>
-            <div>Thu</div>
-            <div>Fri</div>
-            <div>Sat</div>
-          </div>
-          <div class="calendar-days">
-            <span>1</span>
-            <span>2</span>
-            <span>3</span>
-            <span>4</span>
-            <span>5</span>
-            <span>6</span>
-            <span>7</span>
-            <span>8</span>
-            <span>9</span>
-            <span>10</span>
-            <span>11</span>
-            <span>12</span>
-            <span>13</span>
-            <span>14</span>
-            <span>15</span>
-            <span>16</span>
-            <span>17</span>
-            <span>18</span>
-            <span>19</span>
-            <span>20</span>
-            <span>21</span>
-            <span>22</span>
-            <span>23</span>
-            <span>24</span>
-            <span>25</span>
-            <span>26</span>
-            <span>27</span>
-            <span>28</span>
-            <span>29</span>
-            <span>30</span>
-          </div>
+        <div class="ctn container2">
+            <div class="month2">
+                <i class="fas fa-angle-left prev2"></i>
+                <div class="week">
+                    <h2></h2>
+                </div>
+                <i class="fas fa-angle-right next2"></i>
+            </div>
+
+            <div class="table">
+                <table bgcolor="white">
+                    <thead>
+                        <tr class="head">
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+
         </div>
-
-        <div class="month-list"></div>
-      </div>
-
-      <div class="my-calendar">
-        <span>My calendar</span>
-        <button class="export-button"><span>Export</span></button>
-      </div>
-      <div class="subscriber">
-        <span class="Subscriber-List"> Subscriber List</span>
-        <ul>
-          <% listFollowing.forEach(function(u){ %>
-          <li>
-            <a
-              style="text-decoration: none; color: #404040"
-              href="/user?email=<%= u.email %>"
-              ><%= u.username %></a
-            >
-          </li>
-          <% }); %>
-        </ul>
-      </div>
-    </div>
-
-    <div class="ctn container2">
-      <div class="month">
-        <i class="fas fa-angle-left prev"></i>
-        <div class="week">
-          <h2></h2>
+        <div class="container3">
+            <div class="createEvent">
+            </div>
         </div>
-        <i class="fas fa-angle-right next"></i>
-      </div>
+</body>
 
-      <div class="table">
-        <table bgcolor="white">
-          <thead>
-            <tr class="head"></tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
-  </body>
+
 </html>
-
 <script>
-  const date = new Date();
+    const date1 = new Date();
 
-  const renderCalendar = () => {
-    console.log(date);
-    const lastDay = new Date(
-      date.getFullYear(),
-      date.getMonth() + 1,
-      0
-    ).getDate();
-    const prevLastDay = new Date(
-      date.getFullYear(),
-      date.getMonth(),
-      0
-    ).getDate();
+    const renderCalendar = () => {
+        date1.setDate(1);
 
-    const months = [
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    let date1 = '<th></th>';
-    var check1 = false;
-    var check2 = false;
-    var sunday = null;
-    var saturday = null;
-    for (let j = 0; j < 7; j++) {
-      var i = date.getDate() - date.getDay() + j;
-      if (i <= 0) {
-        date1 += `<th class="date">${prevLastDay + i}</th>`;
-        if (j == 0) {
-          sunday = prevLastDay + i;
-          check1 = true;
-        }
-      } else if (i > lastDay) {
-        date1 += `<th class="date">${i - lastDay}</th>`;
-        if (j == 6) {
-          saturday = i - lastDay;
-          check2 = true;
-        }
-      } else {
-        date1 += `<th class="date">${i}</th>`;
-        if (j == 0) {
-          sunday = i;
-        }
-        if (j == 6) {
-          saturday = i;
-        }
-      }
-    }
-    if (check1) {
-      document.querySelector('h2').innerHTML =
-        months[(date.getMonth() - 1) % 12] +
-        ' ' +
-        sunday +
-        ' - ' +
-        months[date.getMonth() % 12] +
-        ' ' +
-        saturday +
-        ' , ' +
-        date.getFullYear();
-    } else if (check2) {
-      document.querySelector('h2').innerHTML =
-        months[date.getMonth() % 12] +
-        ' ' +
-        sunday +
-        ' - ' +
-        months[(date.getMonth() + 1) % 12] +
-        ' ' +
-        saturday +
-        ' , ' +
-        date.getFullYear();
-    } else {
-      document.querySelector('h2').innerHTML =
-        months[date.getMonth()] +
-        ' ' +
-        sunday +
-        ' - ' +
-        saturday +
-        ' , ' +
-        date.getFullYear();
-    }
+        const monthDays = document.querySelector(".days");
 
-    document.querySelector('.head').innerHTML = date1;
-    let date2 = '';
-    for (let j = 0; j < 24; j++) {
-      date2 += `<tr>
-  <td class="Col">${j}:00</td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  <td></td>
-  </tr>`;
-    }
-    document.querySelector('tbody').innerHTML = date2;
-  };
-  renderCalendar();
+        const lastDay = new Date(
+            date1.getFullYear(),
+            date1.getMonth() + 1,
+            0
+        ).getDate();
 
-  document.querySelector('.prev').addEventListener('click', () => {
-    date.setDate(date.getDate() - 7);
+        const prevLastDay = new Date(
+            date1.getFullYear(),
+            date1.getMonth(),
+            0
+        ).getDate();
+
+        const firstDayIndex = date1.getDay();
+
+        const lastDayIndex = new Date(
+            date1.getFullYear(),
+            date1.getMonth() + 1,
+            0
+        ).getDay();
+
+        const nextDays = 7 - lastDayIndex - 1;
+
+        const months = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+
+        document.querySelector(".date h1").innerHTML = months[date1.getMonth()];
+
+        document.querySelector(".date p").innerHTML = new Date().toDateString();
+
+        let days = "";
+
+        for (let x = firstDayIndex; x > 0; x--) {
+            days += `<div class="prev-date">${prevLastDay - x + 1}</div>`;
+        }
+
+        for (let i = 1; i <= lastDay; i++) {
+            if (
+                i === new Date().getDate() &&
+                date1.getMonth() === new Date().getMonth()
+            ) {
+                days += `<div class="today1">${i}</div>`;
+            } else {
+                days += `<div>${i}</div>`;
+            }
+        }
+
+        for (let j = 1; j <= nextDays; j++) {
+            days += `<div class="next-date">${j}</div>`;
+            monthDays.innerHTML = days;
+        }
+    };
+
+    document.querySelector(".prev1").addEventListener("click", () => {
+        date1.setMonth(date1.getMonth() - 1);
+        renderCalendar();
+    });
+
+    document.querySelector(".next1").addEventListener("click", () => {
+        date1.setMonth(date1.getMonth() + 1);
+        renderCalendar();
+    });
+
     renderCalendar();
-  });
-  document.querySelector('.next').addEventListener('click', () => {
-    date.setDate(date.getDate() + 7);
-    renderCalendar();
-  });
-  var button = document.querySelector('.button');
-  button.addEventListener('click', () => {
-    if (button.innerHTML == 'Follow') {
-      button.innerHTML = `Unfollow`;
-      button.style.backgroundColor = 'rgba(45, 192, 104, 0.6)';
-    } else {
-      button.innerHTML = `Follow`;
-      button.style.backgroundColor = 'rgba(45, 192, 104, 1)';
-    }
-  });
 </script>
 
+
+
 <script>
-  // js lich ben trai
 
-  let calendar = document.querySelector('.calendar');
+    const date = new Date();
 
-  const month_names = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-  ];
+    const renderCalendar2 = () => {
+        const lastDay2 = new Date(
+            date.getFullYear(),
+            date.getMonth() + 1,
+            0
+        ).getDate();
+        const prevLastDay = new Date(
+            date.getFullYear(),
+            date.getMonth(),
+            0
+        ).getDate();
 
-  isLeapYear = (year) => {
-    return (
-      (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) ||
-      (year % 100 === 0 && year % 400 === 0)
-    );
-  };
 
-  getFebDays = (year) => {
-    return isLeapYear(year) ? 29 : 28;
-  };
+        const month = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+        ];
+        let date1 = "<th></th>";
+        var check1 = false;
+        var check2 = false;
+        var sunday = null;
+        var saturday = null;
+        for (let j = 0; j < 7; j++) {
+            var i = date.getDate() - date.getDay() + j;
+            if (i <= 0) {
+                date1 += `<th class="date">${prevLastDay + i}</th>`;
 
-  generateCalendar = (month, year) => {
-    let calendar_days = calendar.querySelector('.calendar-days');
-    let calendar_header_year = calendar.querySelector('#year');
+                if (j == 0) {
+                    sunday = prevLastDay + i;
+                    check1 = true;
+                }
+            } else if (i > lastDay2) {
+                date1 += `<th class="date">${i - lastDay2}</th>`;
+                if (j == 6) {
+                    saturday = i - lastDay2;
+                    check2 = true;
+                }
+            } else {
+                if (i === new Date().getDate() &&
+                    date.getMonth() === new Date().getMonth()) {
+                    date1 += `<th class="date today">${i}</th>`;
+                } else {
+                    date1 += `<th class="date">${i}</th>`;
+                }
 
-    let days_of_month = [
-      31,
-      getFebDays(year),
-      31,
-      30,
-      31,
-      30,
-      31,
-      31,
-      30,
-      31,
-      30,
-      31,
-    ];
-
-    calendar_days.innerHTML = '';
-
-    let currDate = new Date();
-    if (!month) month = currDate.getMonth();
-    if (!year) year = currDate.getFullYear();
-
-    let curr_month = `${month_names[month]}`;
-    month_picker.innerHTML = curr_month;
-    calendar_header_year.innerHTML = year;
-
-    // get first day of month
-
-    let first_day = new Date(year, month, 1);
-
-    for (let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++) {
-      let day = document.createElement('div');
-      if (i >= first_day.getDay()) {
-        day.classList.add('calendar-day-hover');
-        day.innerHTML = i - first_day.getDay() + 1;
-        day.innerHTML += `<span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>`;
-        if (
-          i - first_day.getDay() + 1 === currDate.getDate() &&
-          year === currDate.getFullYear() &&
-          month === currDate.getMonth()
-        ) {
-          day.classList.add('curr-date');
+                if (j == 0) {
+                    sunday = i;
+                }
+                if (j == 6) {
+                    saturday = i;
+                }
+            }
         }
-      }
-      calendar_days.appendChild(day);
+        if (check1) {
+            if (date.getMonth() == 0) {
+                document.querySelector("h2").innerHTML
+                    = month[(date.getMonth() + 11)] + ' ' + sunday + ' , ' + (date.getFullYear() - 1) + ' - '
+                    + month[(date.getMonth()) % 12] + ' ' + saturday + ' , ' + date.getFullYear();
+
+            } else {
+                document.querySelector("h2").innerHTML
+                    = month[(date.getMonth() - 1) % 12] + ' ' + sunday + ' - ' + month[(date.getMonth()) % 12] + ' ' + saturday + ' , ' + date.getFullYear();
+            }
+
+        } else if (check2) {
+            if (date.getMonth() == 11) {
+                document.querySelector("h2").innerHTML
+                    = month[(date.getMonth()) % 12] + ' ' + sunday + ' , ' + date.getFullYear() + ' - '
+                    + month[(date.getMonth() + 1) % 12] + ' ' + saturday + ' , ' + (date.getFullYear() + 1);
+
+            } else {
+                document.querySelector("h2").innerHTML
+                    = month[(date.getMonth()) % 12] + ' ' + sunday + ' - ' + month[(date.getMonth() + 1) % 12] + ' ' + saturday + ' , ' + date.getFullYear();
+            }
+
+
+        } else {
+            document.querySelector("h2").innerHTML
+                = month[date.getMonth()] + ' ' + sunday + ' - ' + saturday + ' , ' + date.getFullYear();
+        }
+
+
+
+        document.querySelector(".head").innerHTML = date1;
+
+        let date2 = "";
+        for (let j = 0; j < 24; j++) {
+            date2 += `<tr>
+      <td class="Col">${j}:00</td>
+      <td class="view"></td>
+      <td class="view"></td>
+      <td class="view"></td>
+      <td class="view"></td>
+      <td class="view"></td>
+      <td class="view"></td>
+      <td class="view"></td>
+  </tr>`
+        }
+        document.querySelector("tbody").innerHTML = date2;
+        var view = document.querySelectorAll('.view');
+        var createEvent = document.querySelector('.container3');
+        for (var i = 0; i < 168; i++) {
+            view[i].addEventListener("click", () => {
+                createEvent.innerHTML = `
+            <div class="createEvent">
+            
+             <h1>Add Event</h1>
+                <form action="" id="createEvent-form" method="POST">
+                    <div class="input-field">
+                        <p>Start Time</p>
+                        <input class="input" id="starttime" type="datetime-local" name="starttime" required />
+                    </div>
+                    <div class="input-field">
+                        <p>End Time</p>
+                        <input class="input" id="endtime" type="datetime-local" name="endtime" required />
+                    </div>
+                    <div class="input-field">
+                        <p>Event Name</p>
+                        <input class="input" id="eventname" type="text" name="eventname" autocomplete="off" required />
+                    </div>
+                    <div class="input-field">
+                        <p>Location</p>
+                        <input class="input" id="location" type="text" name="location" autocomplete="off" required />
+                    </div>
+                    <div class="input-field">
+                        <p>Description</p>
+                        <input class="input" id="description" type="text" name="description" autocomplete="off"
+                            required />
+                    </div>
+                    <div class="input-field">
+                        <input id="access" type="checkbox" name="access" value="Public" required />Public
+                    </div>
+                    <input type="submit" class="btn transparent" value="Submit" />
+                </div>`
+                var submit = document.querySelector('.btn');
+                submit.addEventListener("click", () => {
+                    createEvent.style.display = 'none';
+                });
+                createEvent.style.display = 'block';
+            });
+
+        };
     }
-  };
+    renderCalendar2();
 
-  let month_list = calendar.querySelector('.month-list');
+    document.querySelector('.prev2').addEventListener("click", () => {
+        date.setDate(date.getDate() - 7);
+        renderCalendar2();
+    });
 
-  month_names.forEach((e, index) => {
-    let month = document.createElement('div');
-    month.innerHTML = `<div data-month="${index}">${e}</div>`;
-    month.querySelector('div').onclick = () => {
-      month_list.classList.remove('show');
-      curr_month.value = index;
-      generateCalendar(index, curr_year.value);
-    };
-    month_list.appendChild(month);
-  });
+    document.querySelector('.next2').addEventListener("click", () => {
+        date.setDate(date.getDate() + 7);
+        renderCalendar2();
+    });
 
-  let month_picker = calendar.querySelector('#month-picker');
 
-  month_picker.onclick = () => {
-    month_list.classList.add('show');
-  };
 
-  let currDate = new Date();
-
-  let curr_month = { value: currDate.getMonth() };
-  let curr_year = { value: currDate.getFullYear() };
-
-  generateCalendar(curr_month.value, curr_year.value);
-
-  document.querySelector('#prev-year').onclick = () => {
-    --curr_year.value;
-    generateCalendar(curr_month.value, curr_year.value);
-  };
-
-  document.querySelector('#next-year').onclick = () => {
-    ++curr_year.value;
-    generateCalendar(curr_month.value, curr_year.value);
-  };
-
-  let dark_mode_toggle = document.querySelector('.dark-mode-switch');
 </script>
