@@ -1,21 +1,24 @@
 let Event = require('../models/event');
 let User = require('../models/user');
+const Follow = require('../models/follow');
 const Moment = require('moment');
 const MomentRange = require('moment-range');
 const { VirtualType } = require('mongoose');
+const { BulkWriteResult } = require('mongodb');
 
 const moment = MomentRange.extendMoment(Moment);
 class EventController {
   createEvent(req, res, next) {
-    req.body.start = new Date(req.body.start);
-    req.body.end = new Date(req.body.end);
+    // req.body.start = new Date(req.body.start);
+    // req.body.end = new Date(req.body.end);
     Event.find({ userId: req.user._id }).then((events) => {
       if (events.length > 0) {
-        var range = moment().range(req.body.start, req.body.end);
+        // var range = moment().range(req.body.start, req.body.end);
         for (var i = 0; i < events.length; i++) {
           if (
-            range.contains(new Date(events[i].start)) ||
-            range.contains(new Date(events[i].end))
+            (req.body.start > events[i].start &&
+              req.body.start > events[i].end) ||
+            (req.body.end < events[i].end && req.body.end > events[i].start)
           ) {
             res.status(409).send('conflig');
             return;
@@ -24,7 +27,7 @@ class EventController {
       }
       req.body['created_useId'] = req.user._id;
       req.body['userId'] = req.user._id;
-      req.body['eventId'] = req.user._id + '' + req.body.start.getTime();
+      req.body['eventId'] = req.user._id + '' + req.body.start;
       req.body['status'] = 1;
       const e = new Event(req.body);
       e.save().then((e1) => {
@@ -46,30 +49,49 @@ class EventController {
       });
     });
   }
-  getEvent(req, res, next) {
-    const startDate = new Date(
-      req.params.date_start.slice(0, 4) +
-        '-' +
-        req.params.date_start.slice(4, 6) +
-        '-' +
-        req.params.date_start.slice(6)
-    );
-    const endDate = new Date();
-    endDate.setDate(startDate.getDate() + 7);
-    const range = moment().range(startDate, endDate);
+  async getEvent(req, res, next) {
+    const curr = new Date();
+    const first = curr.getDate() - curr.getDay() + 1;
+    let firstDate = new Date(curr.setDate(first));
+    firstDate = firstDate.getTime();
+    let startOfDay = new Date(firstDate - (firstDate % 86400000));
+
+    let startDate = req.params.date_start || startOfDay.getTime() / 1000;
+
+    const endDate = startDate + 604800;
+
     var result = [];
     Event.find({ userId: req.user._id }).then((events) => {
       if (events.length > 0) {
         for (var i = 0; i < events.length; i++) {
           if (
-            range.contains(new Date(events[i].start)) ||
-            range.contains(new Date(events[i].end))
+            (events[i].start < startDate && events[i].end > startDate) ||
+            (events[i].end > endDate && events[i].start < endDate) ||
+            (events[i].start >= startDate && events[i].end <= endDate)
           ) {
             result.push(events[i]);
           }
         }
       }
-      res.send(result);
+    });
+    const u = await User.findOne({ _id: req.user._id });
+    let follow = await Follow.find({ user1: req.user._id, status: 1 });
+
+    let listFollowing = [];
+    for (var i = 0; i < follow.length; i++) {
+      let user = await User.findOne({ _id: follow[i].userId2 });
+      user = Object.assign(
+        {},
+        { username: user.username, _id: user._id, email: user.email }
+      );
+      listFollowing.push(user);
+    }
+    console.log(11111111, result);
+    res.render('pages/home', {
+      user: u,
+      listFollowing: listFollowing,
+      start: startDate,
+      events: result,
     });
   }
   updateEvent(req, res, next) {
@@ -105,7 +127,6 @@ class EventController {
     });
   }
   getEventInfo(req, res, next) {
-    console.log(req.params.eventId);
     Event.findOne({ _id: req.params.eventId }).then((e) => {
       if (e) res.send(e);
       else res.status(404).send('not found');
@@ -125,13 +146,12 @@ class EventController {
     let data = {};
     data.start = new Date(e.start);
     data.end = new Date(e.end);
-    console.log(data.start);
+
     let tmp = true;
     await Event.find({ userId: req.user._id }).then((events) => {
-      console.log(events);
       if (events.length > 0) {
         var range = moment().range(data.start, data.end);
-        console.log(req.user._id, range);
+
         for (var i = 0; i < events.length; i++) {
           if (
             range.contains(new Date(events[i].start)) ||
@@ -144,7 +164,7 @@ class EventController {
         }
       }
     });
-    console.log(tmp);
+
     if (tmp) {
       data['created_useId'] = e['created_useId'];
       data['userId'] = req.user._id;

@@ -1,352 +1,318 @@
-
-  .container1{
-    background-color: rgba(242, 239, 239, 1);
-    width: 320px;
-    height: 630px;
-    margin-top: 10px;
-    margin-left: 0;
-    text-align: center;
-    position: relative;
-    
+.container1 {
+  background-color: rgba(242, 239, 239, 1);
+  width: 320px;
+  height: 630px;
+  margin-top: 10px;
+  margin-left: 0;
+  text-align: center;
+  position: relative;
+}
+a {
+  cursor: pointer;
 }
 
-.container{
-    width: 100%;
-    height: 650px;
-    display: flex;
-    gap: 10px;
-    background-color:  rgba(242, 239, 239, 1);
-    position: relative;
-
-    
-
-}
-
-.container2{
-    width: 78%;
-    height: 630px;
-    margin-top: 10px;
-    position: relative;
-   
-}
-
-.container3{
+.container {
   width: 100%;
   height: 650px;
-  background-color:  rgba(242, 239, 239, 0);
+  display: flex;
+  gap: 10px;
+  background-color: rgba(242, 239, 239, 1);
+  position: relative;
+}
+
+.container2 {
+  width: 78%;
+  height: 630px;
+  margin-top: 10px;
+  position: relative;
+}
+
+.container3 {
+  width: 100%;
+  height: 650px;
+  background-color: rgba(242, 239, 239, 0);
   position: absolute;
   display: none;
-
-  
-
 }
-.button{
-    font-size: 25px;
-    background-color: rgba(45, 192, 104, 1);
-    border: none;
-    border-radius: 8px;
-    color: white;
-    font-family: Merienda;
-    font-weight: normal;
-    padding: 10px 30px;
-    margin-top: 200px;
+.button {
+  font-size: 25px;
+  background-color: rgba(45, 192, 104, 1);
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-family: Merienda;
+  font-weight: normal;
+  padding: 10px 30px;
+  margin-top: 200px;
 }
 
-.info{
-margin: 20px;
-
+.info {
+  margin: 20px;
 }
 
-.username{
-height: 40px;
-border-radius: 4px;
-background-color:#87C7DC;
-font-family: Poppins;
-font-size: 20px;
+.username {
+  height: 40px;
+  border-radius: 4px;
+  background-color: #87c7dc;
+  font-family: Poppins;
+  font-size: 20px;
 }
 
-.email{
-font-family: Merienda;
-position:absolute;
-margin: 0;
-top: 90px;
-left: 20px;
-
+.email {
+  font-family: Merienda;
+  position: absolute;
+  margin: 0;
+  top: 90px;
+  left: 20px;
 }
 
-.phone{
-font-family: Merienda;
-position:absolute;
-margin: 0;
-top: 150px;
-left: 20px;
-
+.phone {
+  font-family: Merienda;
+  position: absolute;
+  margin: 0;
+  top: 150px;
+  left: 20px;
 }
 
-.table{
-width: 100%;
-height: 530px;
-overflow-x:hidden;
-overflow-x:hidden;
-position: absolute;
-bottom: 0;
-
+.table {
+  width: 100%;
+  height: 530px;
+  overflow-x: hidden;
+  overflow-x: hidden;
+  position: absolute;
+  bottom: 0;
 }
-th{
-width: 145px;
-background-color: rgb(248, 248, 248); 
-font-size: 20px;
-font-family: 200;
-position: sticky;
-top: 0px;
-
-
+th {
+  width: 145px;
+  background-color: rgb(248, 248, 248);
+  font-size: 20px;
+  font-family: 200;
+  position: sticky;
+  top: 0px;
 }
 
-table  {
-border: 0.0px solid rgba(196, 196, 196, 0.08);
-border-collapse: collapse;
-
+table {
+  border: 0px solid rgba(196, 196, 196, 0.08);
+  border-collapse: collapse;
 }
-th ,td{
-
-height: 50px;
-text-align: center;
-font-family: Poppins;
-}
-
-.week{
-width: 600px;
-height: 100px;
-text-align: center;
-font-family: Poppins;
-font-size: 20px;
-font-weight: normal;
-
+th,
+td {
+  height: 50px;
+  text-align: center;
+  font-family: Poppins;
 }
 
-.Col{
-background-color: rgba(196, 196, 196, 0.08);
-border: 0.5px solid rgba(196, 196, 196, 0.08);
-border-collapse: collapse;
-vertical-align: top;
+.week {
+  width: 600px;
+  height: 100px;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 20px;
+  font-weight: normal;
+}
 
+.Col {
+  background-color: rgba(196, 196, 196, 0.08);
+  border: 0.5px solid rgba(196, 196, 196, 0.08);
+  border-collapse: collapse;
+  vertical-align: top;
 }
 td {
-border: 0.5px solid rgba(242, 239, 239, 1);
-border-collapse: collapse;
-
-
+  border: 0.5px solid rgba(242, 239, 239, 1);
+  border-collapse: collapse;
 }
 
-
-h2{
-font-weight: 200;
+h2 {
+  font-weight: 200;
 }
-.event{
-
-background-color: #C0EFF6;
-font-family: Poppins;
-color: #619CD8;
-
+.event {
+  background-color: #c0eff6;
+  font-family: Poppins;
+  color: #619cd8;
 }
 .month2 {
-width: 100%;
-height: 100px;
-display: flex;
-justify-content: space-between;
-align-items: center;
-text-align: center;
-
-
+  width: 100%;
+  height: 100px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
 }
 .month2 i {
-font-size: 2.5rem;
-cursor: pointer;
+  font-size: 2.5rem;
+  cursor: pointer;
 }
 
-.today{
-background-color:#C0EFF6;
-
+.today {
+  background-color: #c0eff6;
 }
-
 
 .calendar {
-width: 100%;
-height: 400px;
-background-color: white; 
-font-family: "Poppins";
-margin-bottom: 10px;
+  width: 100%;
+  height: 400px;
+  background-color: white;
+  font-family: 'Poppins';
+  margin-bottom: 10px;
 }
 
 .month1 {
-width: 100%;
-height: 70px;
-background-color: rgb(248, 248, 248);
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 0 2rem;
-text-align: center;
-box-sizing: border-box;
-margin: 0;
+  width: 100%;
+  height: 70px;
+  background-color: rgb(248, 248, 248);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+  text-align: center;
+  box-sizing: border-box;
+  margin: 0;
 }
 
 .month1 i {
-font-size: 25px;
-cursor: pointer;
+  font-size: 25px;
+  cursor: pointer;
 }
 
 .month1 h1 {
-font-size: 25px;
-font-weight: 300;
-text-transform: uppercase;
-letter-spacing: 0.2rem;
-margin: 0;
+  font-size: 25px;
+  font-weight: 300;
+  text-transform: uppercase;
+  letter-spacing: 0.2rem;
+  margin: 0;
 }
 
 .month1 p {
-font-size: 0.8rem;
-margin: 0;
+  font-size: 0.8rem;
+  margin: 0;
 }
 
 .weekdays {
-width: 100%;
-height: 3rem;
-display: flex;
-align-items: center;
-
+  width: 100%;
+  height: 3rem;
+  display: flex;
+  align-items: center;
 }
 
 .weekdays div {
-font-size: 0.8rem;
-font-weight: 300;
-letter-spacing: 0.1rem;
-width: calc(360px / 7);
-display: flex;
-justify-content: center;
-align-items: center;
+  font-size: 0.8rem;
+  font-weight: 300;
+  letter-spacing: 0.1rem;
+  width: calc(360px / 7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .days {
-width: 100%;
-display: flex;
-flex-wrap: wrap;
-padding: 0.2rem;
-
-
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.2rem;
 }
 
 .days div {
-font-size: 1rem;
-width: calc(310px / 7);
-height: 45px;
-display: flex;
-justify-content: center;
-align-items: center;
-transition: background-color 0.2s;
+  font-size: 1rem;
+  width: calc(310px / 7);
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.2s;
 }
 
 .prev-date,
 .next-date {
-opacity: 0.4;
+  opacity: 0.4;
 }
 
 .today1 {
-background-color: #C0EFF6;
+  background-color: #c0eff6;
 }
-.my-calendar{
-width: 100%;
-height: 50px;
-background-color: white ;
-font-family: Poppins;
-margin-bottom: 10px;
-border-radius: 4px;
-line-height: 50px;
+.my-calendar {
+  width: 100%;
+  height: 50px;
+  background-color: white;
+  font-family: Poppins;
+  margin-bottom: 10px;
+  border-radius: 4px;
+  line-height: 50px;
 }
-.my-calendar span{
-font-size: 25px;
+.my-calendar span {
+  font-size: 25px;
 }
-.export-button{
-font-family: Poppins;
-background-color: #C0EFF6;
-border: none;
-border-radius: 4px;
-font-size: 25px;
-color:white;
-width: 150px;
-
-
+.export-button {
+  font-family: Poppins;
+  background-color: #c0eff6;
+  border: none;
+  border-radius: 4px;
+  font-size: 25px;
+  color: white;
+  width: 150px;
 }
-.subscriber{
-width: 100%;
-height: 160px;
-background-color: white;
-border-radius: 4px;
-font-family: Poppins;
-
+.subscriber {
+  width: 100%;
+  height: 160px;
+  background-color: white;
+  border-radius: 4px;
+  font-family: Poppins;
 }
-.subscriber span{
-font-size: 25px;
+.subscriber span {
+  font-size: 25px;
 }
-ul{
-margin: 0;
+ul {
+  margin: 0;
 }
-.subscriber li{
-width: 230px;
-list-style-type: none;
-background-color: rgba(242, 239, 239, 1);
-margin: 1px;
-border-radius: 4px;
+.subscriber li {
+  width: 230px;
+  list-style-type: none;
+  background-color: rgba(242, 239, 239, 1);
+  margin: 1px;
+  border-radius: 4px;
 }
-.createEvent{
-width: 400px;
-height: 500px;
-background-color: white;
-position: absolute;
-bottom: 20px;
-font-family:Poppins ;
-right: 400px;
-text-align: center;
-border-radius: 4px;
-border: 1px solid #2b2225;
-
+.createEvent {
+  width: 400px;
+  height: 500px;
+  background-color: white;
+  position: absolute;
+  bottom: 20px;
+  font-family: Poppins;
+  right: 400px;
+  text-align: center;
+  border-radius: 4px;
+  border: 1px solid #2b2225;
 }
-.createEvent h1{
-text-align: center;
-background-color: #7EC6CB;
-width: 300px;
-margin-left: 50px;
-font-weight: 300;
-border-radius: 4px;
-
+.createEvent h1 {
+  text-align: center;
+  background-color: #7ec6cb;
+  width: 300px;
+  margin-left: 50px;
+  font-weight: 300;
+  border-radius: 4px;
 }
-.input-field{
-margin-bottom: 10px;
-margin-left: 50px;
-text-align: left;
-
-
+.input-field {
+  margin-bottom: 10px;
+  margin-left: 50px;
+  text-align: left;
 }
-.input{
-width: 300px;
-height: 20px;
+.input {
+  width: 300px;
+  height: 20px;
 }
-.createEvent p{
-margin: 0;
+.createEvent p {
+  margin: 0;
 }
-.btn{
-text-align: center;
-background-color: #2DC068;
-border: none;
-font-size: 25px;
-border-radius: 4px;
-padding: 5px 20px;
-color: white;
+.btn {
+  text-align: center;
+  background-color: #2dc068;
+  border: none;
+  font-size: 25px;
+  border-radius: 4px;
+  padding: 5px 20px;
+  color: white;
 }
 
-#description{
-height: 40px;
+#description {
+  height: 40px;
 }
 
 /* css event */

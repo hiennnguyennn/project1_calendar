@@ -24,7 +24,7 @@
                     <i class="fas fa-angle-left prev1"></i>
                     <div class="date">
                         <h1></h1>
-                        <p></p>
+                        <p><a href="/events/list" style="text-decoration: none;color:#c0eff6"></a></p>
                     </div>
                     <i class="fas fa-angle-right next1"></i>
                 </div>
@@ -44,10 +44,18 @@
                 <button class="export-button"><span>Export</span></button>
             </div>
             <div class="subscriber">
-                <span>Subscriber List</span>
-                <ul class="Subscriber-List">
-
-                </ul>
+                <span class="Subscriber-List"> Subscriber List</span>
+        <ul>
+          <% listFollowing.forEach(function(u){ %>
+          <li>
+            <a
+              style="text-decoration: none; color: #404040"
+              href="/user?email=<%= u.email %>"
+              ><%= u.username %></a
+            >
+          </li>
+          <% }); %>
+        </ul>
             </div>
         </div>
         <div class="ctn container2">
@@ -72,43 +80,44 @@
 
         </div>
         <div class="container3">
-            <div class="createEvent">
-            </div>
+            <form class="createEvent">
+            </form>
         </div>
 </body>
 
 
 </html>
 <script>
-    const date1 = new Date();
+   const date1 = new Date(Number('<%= start %>')*1000);
 
-    const renderCalendar = () => {
-        date1.setDate(1);
 
+    const renderCalendar = () => { 
+      let tmp=new Date(Number('<%= start %>')*1000);
+      tmp.setDate(1)
+      
         const monthDays = document.querySelector(".days");
-
+        
         const lastDay = new Date(
-            date1.getFullYear(),
-            date1.getMonth() + 1,
+            tmp.getFullYear(),
+            tmp.getMonth() + 1,
             0
         ).getDate();
 
         const prevLastDay = new Date(
-            date1.getFullYear(),
-            date1.getMonth(),
+            tmp.getFullYear(),
+            tmp.getMonth(),
             0
         ).getDate();
-
-        const firstDayIndex = date1.getDay();
-
+        
+        const firstDayIndex = tmp.getDay();
+       
         const lastDayIndex = new Date(
-            date1.getFullYear(),
-            date1.getMonth() + 1,
+            tmp.getFullYear(),
+            tmp.getMonth() + 1,
             0
         ).getDay();
 
         const nextDays = 7 - lastDayIndex - 1;
-
         const months = [
             "January",
             "February",
@@ -126,39 +135,78 @@
 
         document.querySelector(".date h1").innerHTML = months[date1.getMonth()];
 
-        document.querySelector(".date p").innerHTML = new Date().toDateString();
+        document.querySelector(".date p a").innerHTML = new Date().toDateString();
 
         let days = "";
 
         for (let x = firstDayIndex; x > 0; x--) {
-            days += `<div class="prev-date">${prevLastDay - x + 1}</div>`;
+            
+            let curr = new Date(Number('<%= start %>')*1000);
+        
+   let d=new Date();d=date1;d.setMonth(curr.getMonth()-1);d.setDate(prevLastDay - x + 1)
+            days += `<div class="prev-date"><a class="hrefToEvent abc" data-id=${d.getTime()/1000}>${prevLastDay - x + 1}<a></div>`;
         }
 
         for (let i = 1; i <= lastDay; i++) {
+            let date=new Date();date=new Date(Number('<%= start %>')*1000);
             if (
                 i === new Date().getDate() &&
-                date1.getMonth() === new Date().getMonth()
+                date.getMonth() === new Date().getMonth()&&date.getFullYear() === new Date().getFullYear()
             ) {
                 days += `<div class="today1">${i}</div>`;
             } else {
-                days += `<div>${i}</div>`;
+               let d=new Date(Number('<%= start %>')*1000);d.setDate(i);
+               
+                const first = d.getDate() - d.getDay() + 1;
+    let firstDate = new Date(d.setDate(first));
+    firstDate = firstDate.getTime();
+    let startOfDay = new Date(firstDate - (firstDate % 86400000));
+
+    let startDate =  startOfDay.getTime() / 1000;
+
+                days += `<div><a class="hrefToEvent def" data-id=${startDate}>${i}<a></div>`;
             }
         }
 
         for (let j = 1; j <= nextDays; j++) {
-            days += `<div class="next-date">${j}</div>`;
+           
+            let curr = new Date(Number('<%= start %>')*1000);
+        
+   
+
+    let d=new Date();d=date1;
+    d.setDate(1);
+    
+    d.setMonth(new Date(curr).getMonth()+1)
+
+            days += `<div class="next-date"><a class="hrefToEvent" data-id=${d.getTime()/1000}>${j}</a></div>`;
             monthDays.innerHTML = days;
         }
+        const hrefToEvent=document.querySelectorAll('.hrefToEvent');
+ 
+    for (var i = 0; i < hrefToEvent.length; i++) {
+       
+        (function (index) {
+            hrefToEvent[i].onclick = function (e) {
+               
+                let href = `/events/list/${e.target.dataset.id}`
+                window.location.replace(href)
+            }
+        })(i)
+    }
     };
-
+  
     document.querySelector(".prev1").addEventListener("click", () => {
-        date1.setMonth(date1.getMonth() - 1);
-        renderCalendar();
+        
+        let newDate=new Date(Number('<%= start %>')*1000);newDate.setMonth(newDate.getMonth() - 1);
+       
+        window.location.replace(`/events/list/${newDate.getTime()/1000}`)
     });
 
     document.querySelector(".next1").addEventListener("click", () => {
-        date1.setMonth(date1.getMonth() + 1);
-        renderCalendar();
+        let newDate=new Date(Number('<%= start %>')*1000);newDate.setMonth(newDate.getMonth()+1);
+      
+        window.location.replace(`/events/list/${newDate.getTime()/1000}`)
     });
 
     renderCalendar();
@@ -168,8 +216,8 @@
 
 <script>
 
-    const date = new Date();
-
+    const date = new Date(Number('<%= start %>')*1000);
+  
     const renderCalendar2 = () => {
         const lastDay2 = new Date(
             date.getFullYear(),
@@ -290,15 +338,15 @@
                 <form action="" id="createEvent-form" method="POST">
                     <div class="input-field">
                         <p>Start Time</p>
-                        <input class="input" id="starttime" type="datetime-local" name="starttime" required />
+                        <input class="input" id="starttime" type="datetime-local" name="start" required />
                     </div>
                     <div class="input-field">
                         <p>End Time</p>
-                        <input class="input" id="endtime" type="datetime-local" name="endtime" required />
+                        <input class="input" id="endtime" type="datetime-local" name="end" required />
                     </div>
                     <div class="input-field">
                         <p>Event Name</p>
-                        <input class="input" id="eventname" type="text" name="eventname" autocomplete="off" required />
+                        <input class="input" id="eventname" type="text" name="name" autocomplete="off" required />
                     </div>
                     <div class="input-field">
                         <p>Location</p>
@@ -310,29 +358,46 @@
                             required />
                     </div>
                     <div class="input-field">
-                        <input id="access" type="checkbox" name="access" value="Public" required />Public
+                        <input id="access" type="checkbox" name="private" required />Private
                     </div>
-                    <input type="submit" class="btn transparent" value="Submit" />
+                    <input type="submit" class="btn transparent createEventButton" value="Submit" />
                 </div>`
                 var submit = document.querySelector('.btn');
                 submit.addEventListener("click", () => {
                     createEvent.style.display = 'none';
                 });
                 createEvent.style.display = 'block';
+                const createEventForm=document.querySelector('#createEvent-form');
+                
+                createEventForm.onSubmit=function(e){
+                    document.querySelector('#starttime').value= parseInt((new Date( document.querySelector('#starttime').value).getTime() / 1000).toFixed(0));
+                    document.querySelector('#endtime').value= parseInt((new Date( document.querySelector('#endtime').value).getTime() / 1000).toFixed(0));
+                    form.submit();
+                }
             });
 
         };
     }
     renderCalendar2();
-
+   
     document.querySelector('.prev2').addEventListener("click", () => {
-        date.setDate(date.getDate() - 7);
-        renderCalendar2();
+
+
+    let startDate = Number('<%= start %>')
+   
+    let date=startDate-604800;
+        window.location.replace(`/events/list/${date}`)
+       
     });
 
     document.querySelector('.next2').addEventListener("click", () => {
-        date.setDate(date.getDate() + 7);
-        renderCalendar2();
+       
+    let startDate = Number('<%= start %>');
+   
+    let date=startDate+604800;
+        window.location.replace(`/events/list/${date}`)
+       
+
     });
 
 

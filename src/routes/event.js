@@ -36,29 +36,6 @@ const owner = require('../app/middleware/ownEvent');
 
 /**
  * @swagger
- * /events/{eventId}:
- *   get:
- *     description: Event detail
- *     tags: [Event]
- *     parameters:
- *       - in: path
- *         name: eventId
- *         schema:
- *              type: number
- *         required: true
- *         description: Event id
- *     responses:
- *       200:
- *         description: Created successfully
- *         content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Event'
- */
-router.get('/:eventId', eventController.getEventInfo);
-
-/**
- * @swagger
  * /events:
  *   post:
  *     description: Create event
@@ -144,7 +121,7 @@ router.delete('/:eventId', owner.requireOwn, eventController.deleteEvent);
  *         name: date_start
  *         schema:
  *              type: string
- *         required: true
+ *         required: false
  *         description: Start date for event
  *     responses:
  *       200:
@@ -156,7 +133,7 @@ router.delete('/:eventId', owner.requireOwn, eventController.deleteEvent);
  *                      items:
  *                          $ref: '#/components/schemas/Event'
  */
-router.get('/list/:date_start', eventController.getEvent);
+router.get('/list/:date_start*?', eventController.getEvent);
 
 /**
  * @swagger
@@ -178,4 +155,26 @@ router.get('/list/:date_start', eventController.getEvent);
  *         description: Conflig
  */
 router.get('/import/:id', eventController.importEvent);
+/**
+ * @swagger
+ * /events/{eventId}:
+ *   get:
+ *     description: Event detail
+ *     tags: [Event]
+ *     parameters:
+ *       - in: path
+ *         name: eventId
+ *         schema:
+ *              type: number
+ *         required: true
+ *         description: Event id
+ *     responses:
+ *       200:
+ *         description: Created successfully
+ *         content:
+ *              application/json:
+ *                  schema:
+ *                      $ref: '#/components/schemas/Event'
+ */
+router.get('/:eventId', eventController.getEventInfo);
 module.exports = router;

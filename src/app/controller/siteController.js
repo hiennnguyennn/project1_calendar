@@ -26,7 +26,7 @@ class SiteController {
                 }
               );
               res.cookie('token', token);
-              res.send(token);
+              res.redirect('/events/list/');
             });
           });
         });
@@ -52,7 +52,12 @@ class SiteController {
                 }
               );
               res.cookie('token', token);
-              res.redirect('/home');
+              console.log(111);
+              try {
+                res.redirect('/events/list/');
+              } catch (e) {
+                console.log(e);
+              }
             } else res.status(401).send('wrong password');
           });
         } else res.status(404).send('account not found');
@@ -82,7 +87,7 @@ class SiteController {
       listFollowing.push(user);
     }
     console.log(listFollowing);
-    res.render('pages/home', { user: u, listFollowing: listFollowing });
+    res.render('events/list', { user: u, listFollowing: listFollowing });
   }
 }
 module.exports = new SiteController();
