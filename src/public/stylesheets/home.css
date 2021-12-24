@@ -73,6 +73,12 @@ a {
   top: 150px;
   left: 20px;
 }
+.lunar {
+  font-size: 8px;
+  margin-top: 35px;
+  margin-left: -2px;
+  color: #989898;
+}
 
 .table {
   width: 100%;
@@ -211,7 +217,7 @@ h2 {
 }
 
 .days div {
-  font-size: 1rem;
+  font-size: 17px;
   width: calc(310px / 7);
   height: 45px;
   display: flex;
