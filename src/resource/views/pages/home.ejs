@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Home</title>
+    <link rel="icon" type="img" href="/images/iconcalendar.png" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Satisfy" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css?family=Merienda" rel="stylesheet" />
@@ -468,18 +470,16 @@ let nam = xxx[2];
 
         document.querySelector(".head").innerHTML = date1;
 
+        var id = Number('<%= start %>') - 111600
         let date2 = "";
-        for (let j = 0; j < 24; j++) {
-            date2 += `<tr>
-      <td class="Col">${j}:00</td>
-      <td class="view"></td>
-      <td class="view"></td>
-      <td class="view"></td>
-      <td class="view"></td>
-      <td class="view"></td>
-      <td class="view"></td>
-      <td class="view"></td>
-  </tr>`
+        for (let i = 0; i < 24; i++) {
+        date2 += `<tr>
+            <td class="Col">${i}:00</td>`
+            for (let j = 0; j < 7; j++) {
+                date2 += `<td class="view " id="id${id + j * 86400}"></td>`
+            }
+            id = id + 3600
+            date2 += `</tr>`
         }
         document.querySelector("tbody").innerHTML = date2;
         var view = document.querySelectorAll('.view');
@@ -488,17 +488,12 @@ let nam = xxx[2];
             view[i].addEventListener("click", () => {
                 createEvent.innerHTML = `
             <div class="createEvent">
-            
-             <h1>Add Event</h1>
+                <span class="material-icons">
+                    close
+                    </span>   
+                <h1>Add Event</h1>
                 <form action="" id="createEvent-form" method="POST">
-                    <div class="input-field">
-                        <p>Start Time</p>
-                        <input class="input" id="starttime" type="datetime-local" name="start" required />
-                    </div>
-                    <div class="input-field">
-                        <p>End Time</p>
-                        <input class="input" id="endtime" type="datetime-local" name="end" required />
-                    </div>
+                    
                     <div class="input-field">
                         <p>Event Name</p>
                         <input class="input" id="eventname" type="text" name="name" autocomplete="off" required />
@@ -513,12 +508,24 @@ let nam = xxx[2];
                             required />
                     </div>
                     <div class="input-field">
-                        <input id="access" type="checkbox" name="private" required />Private
+                        <p>Start Time</p>
+                        <input class="input" id="starttime" type="datetime-local" name="start" required />
+                    </div>
+                    <div class="input-field">
+                        <p>End Time</p>
+                        <input class="input" id="endtime" type="datetime-local" name="end" required />
+                    </div>
+                    <div class="input-field">
+                        <input id="access" type="checkbox" name="private" />Private
                     </div>
                     <input type="submit" class="btn transparent createEventButton" value="Submit" />
                 </div>`
                 var submit = document.querySelector('.btn');
                 submit.addEventListener("click", () => {
+                   
+                });
+                var close = document.querySelector('.material-icons');
+                close.addEventListener("click", () => {
                     createEvent.style.display = 'none';
                 });
                 createEvent.style.display = 'block';
@@ -532,6 +539,22 @@ let nam = xxx[2];
             });
 
         };
+        var getApi = ''
+        fetch(getApi)
+            .then(function (response) {
+                return response.json();
+
+            })
+            .then(function (events) {
+            for(let i = 0; i < events.length(); i++){
+                 var event = document.querySelector(`#id${events[i].start}`);
+                event.classList.add('event')
+                event.innerHTML = `<p>${events[i].name}<p>`;
+            }
+               
+
+
+            })
     }
     renderCalendar2();
    

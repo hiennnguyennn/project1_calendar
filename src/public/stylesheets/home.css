@@ -30,7 +30,7 @@ a {
 .container3 {
   width: 100%;
   height: 650px;
-  background-color: rgba(242, 239, 239, 0);
+  background-color: rgba(65, 59, 59, 0.4);
   position: absolute;
   display: none;
 }
@@ -277,13 +277,12 @@ ul {
 }
 .createEvent {
   width: 400px;
-  height: 500px;
+  height: 520px;
   background-color: white;
   position: absolute;
-  bottom: 20px;
+  bottom: 50px;
   font-family: Poppins;
-  right: 400px;
-  text-align: center;
+  right: 450px;
   border-radius: 4px;
   border: 1px solid #2b2225;
 }
@@ -294,6 +293,7 @@ ul {
   margin-left: 50px;
   font-weight: 300;
   border-radius: 4px;
+  margin-top: 0;
 }
 .input-field {
   margin-bottom: 10px;
@@ -315,8 +315,13 @@ ul {
   border-radius: 4px;
   padding: 5px 20px;
   color: white;
+  margin-left: 140px;
 }
 
+.material-icons{
+  font-size: 30px;
+  margin-left: 360px;
+}
 #description {
   height: 40px;
 }
@@ -326,4 +331,13 @@ ul {
   background-color: #c0eff6;
   font-family: Poppins;
   color: #619cd8;
+}
+.days div:hover:not(.today1) {
+  border: 1px solid #777;
+  cursor: pointer;
+}
+
+tbody td:hover:not(.Col) {
+  border: 2px solid #777;
+  cursor: pointer;
 }
