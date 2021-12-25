@@ -1,7 +1,7 @@
 const bcrypt = require('bcrypt');
 let User = require('../models/user');
 let Follow = require('../models/follow');
-
+let Event = require('../models/event');
 class UserController {
   home(req, res) {
     res.render('home', { username: req.user.username });
@@ -16,13 +16,46 @@ class UserController {
       user = user.toObject();
       delete user.password;
       user.dob = user.dob.toISOString().substring(0, 10);
+
+      const curr = new Date();
+      const first = curr.getDate() - curr.getDay() + 1;
+      let firstDate = new Date(curr.setDate(first));
+      firstDate = firstDate.getTime();
+      let startOfDay = new Date(firstDate - (firstDate % 86400000));
+      let startDate;
+
+      if (startOfDay.getDay() !== 0)
+        startDate = startOfDay.getTime() / 1000 - 24 * 60 * 60;
+      else startDate = startOfDay.getTime() / 1000;
+      startDate = Number(startDate);
+
+      const endDate = startDate + 604800;
+
+      var result = [];
+      await Event.find({ userId: user._id }).then((events) => {
+        if (events.length > 0) {
+          for (var i = 0; i < events.length; i++) {
+            if (
+              (events[i].start < startDate && events[i].end > startDate) ||
+              (events[i].end > endDate && events[i].start < endDate) ||
+              (events[i].start >= startDate && events[i].end <= endDate)
+            ) {
+              result.push(events[i]);
+            }
+          }
+        }
+      });
+      if (result.length === 0) result = 0;
+
       let follow = await Follow.findOne({
         userId1: req.user._id,
         userId2: user._id,
       });
+      console.log(result);
       if (follow && follow.status == 1)
-        res.render('pages/userProfile', { u: user, follow: 1 });
-      else res.render('pages/userProfile', { u: user, follow: 0 });
+        res.render('pages/userProfile', { u: user, follow: 1, events: result });
+      else
+        res.render('pages/userProfile', { u: user, follow: 0, events: result });
     } else res.redirect('/events/list?mess=3');
     return;
   }
