@@ -9,7 +9,7 @@ const Event = new Schema(
     description: String,
     start: String,
     end: String,
-    private: Boolean,
+    private: Number,
     created_useId: Number,
     userId: Number,
     status: Number,

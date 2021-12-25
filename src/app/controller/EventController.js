@@ -5,27 +5,22 @@ const Moment = require('moment');
 const MomentRange = require('moment-range');
 const { VirtualType } = require('mongoose');
 const { BulkWriteResult } = require('mongodb');
+const exportEventToExcel = require('../middleware/exportService');
 
 const moment = MomentRange.extendMoment(Moment);
 class EventController {
-  createEvent(req, res, next) {
+  async createEvent(req, res, next) {
     let t = new Date(req.body.start);
     t.setHours(t.getHours() + 7);
     req.body.start = parseInt((t.getTime() / 1000).toFixed(0));
     t = new Date(req.body.end);
     t.setHours(t.getHours() + 7);
     req.body.end = parseInt((t.getTime() / 1000).toFixed(0));
-
-    Event.find({ userId: req.user._id }).then((events) => {
+    req.body.private = req.body.private ? 1 : 0;
+    await Event.find({ userId: req.user._id }).then((events) => {
       if (events.length > 0) {
         // var range = moment().range(req.body.start, req.body.end);
         for (var i = 0; i < events.length; i++) {
-          console.log(
-            req.body.start,
-            req.body.end,
-            events[i].start,
-            events[i].end
-          );
           if (
             (req.body.start >= events[i].start &&
               req.body.start <= events[i].end) ||
@@ -52,15 +47,18 @@ class EventController {
     let firstDate = new Date(curr.setDate(first));
     firstDate = firstDate.getTime();
     let startOfDay = new Date(firstDate - (firstDate % 86400000));
+    let startDate;
 
-    let startDate =
-      req.params.date_start || startOfDay.getTime() / 1000 - 24 * 60 * 60;
+    if (startOfDay.getDay() !== 0)
+      startDate =
+        req.params.date_start || startOfDay.getTime() / 1000 - 24 * 60 * 60;
+    else startDate = req.params.date_start || startOfDay.getTime() / 1000;
     startDate = Number(startDate);
 
     const endDate = startDate + 604800;
-    console.log(startDate, endDate);
+
     var result = [];
-    Event.find({ userId: req.user._id }).then((events) => {
+    await Event.find({ userId: req.user._id }).then((events) => {
       if (events.length > 0) {
         for (var i = 0; i < events.length; i++) {
           if (
@@ -73,6 +71,8 @@ class EventController {
         }
       }
     });
+    if (result.length === 0) result = 0;
+
     const u = await User.findOne({ _id: req.user._id });
     let follow = await Follow.find({ user1: req.user._id, status: 1 });
 
@@ -85,12 +85,7 @@ class EventController {
       );
       listFollowing.push(user);
     }
-    console.log(11111111, {
-      user: u,
-      listFollowing: listFollowing,
-      start: startDate,
-      events: result,
-    });
+
     res.render('pages/home', {
       user: u,
       listFollowing: listFollowing,
@@ -98,55 +93,55 @@ class EventController {
       events: result,
     });
   }
-  updateEvent(req, res, next) {
-    Event.findOne({ _id: req.params.eventId }).then((e) => {
+  async updateEvent(req, res, next) {
+    req.body.private = req.body.private ? 1 : 0;
+    let t = new Date(req.body.start);
+    t.setHours(t.getHours() + 7);
+    req.body.start = parseInt((t.getTime() / 1000).toFixed(0));
+    t = new Date(req.body.end);
+    t.setHours(t.getHours() + 7);
+    req.body.end = parseInt((t.getTime() / 1000).toFixed(0));
+    console.log(req.body, 111);
+    await Event.findOne({ _id: req.params.eventId }).then(async (e) => {
       if (req.body.start != e.start || req.body.end != e.end) {
-        Event.find({ userId: req.user._id }).then((events) => {
+        console.log(333);
+        await Event.find({ userId: req.user._id }).then((events) => {
           if (events.length > 0) {
-            req.body.start = new Date(req.body.start);
-            req.body.end = new Date(req.body.end);
-            var range = moment().range(req.body.start, req.body.end);
+            // var range = moment().range(req.body.start, req.body.end);
             for (var i = 0; i < events.length; i++) {
               if (
-                (range.contains(new Date(events[i].start)) ||
-                  range.contains(new Date(events[i].end))) &&
-                events[i]._id !== e._id
+                (req.body.start >= events[i].start &&
+                  req.body.start <= events[i].end) ||
+                (req.body.end <= events[i].end &&
+                  req.body.end >= events[i].start)
               ) {
-                res.status(409).send('conflig');
+                res.redirect('/events/list?err=5');
                 return;
               }
             }
           }
-          req.body['updatedAt'] = new Date();
-          Event.updateOne({ _id: e._id }, req.body).then((ne) => {
-            res.send(req.body);
-          });
         });
       }
+      console.log(222, req.body);
+      req.body['updatedAt'] = new Date();
+      await Event.updateOne({ _id: e._id }, req.body);
+      res.redirect('/events/list');
     });
   }
   deleteEvent(req, res, next) {
     Event.deleteOne({ _id: req.params.eventId }).then(() => {
-      res.status(200).send('delete successfully');
+      res.redirect('/events/list');
     });
   }
   getEventInfo(req, res, next) {
     Event.findOne({ _id: req.params.eventId }).then((e) => {
       if (e) res.send(e);
-      else res.status(404).send('not found');
+      else res.redirect('events/list?err=4');
     });
   }
   async importEvent(req, res, next) {
     const e = await Event.findOne({ _id: req.params.id });
-    if (!e) {
-      res.status(404).send('NOT FOUND');
-      return;
-    }
-    if (e.private) {
-      res.send('CANNOT IMPORT');
-      return;
-    }
-    //  if(e['created_useId']===req.user._id)
+
     let data = {};
     data.start = new Date(e.start);
     data.end = new Date(e.end);
@@ -183,6 +178,39 @@ class EventController {
         res.send(e1);
       });
     }
+  }
+  async exportToExcel(req, res, next) {
+    let e = await Event.find({ userId: req.user._id });
+    for (var i = 0; i < e.length; i++) {
+      e[i].start = new Date(Number(e[i].start) * 1000).toISOString();
+
+      e[i].end = new Date(Number(e[i].end) * 1000).toISOString();
+      e[i].private = e[i].private == 1 ? 'Private' : 'Public';
+    }
+    console.log(e);
+    const workSheetColumnName = [
+      '_id',
+      'name',
+      'location',
+
+      'description',
+      'start',
+
+      'end',
+      'private',
+      'created_useId',
+
+      'userId',
+
+      'status',
+      'createdAt',
+      'updatedAt',
+    ];
+    const workSheetName = 'Events';
+    const filePath = './outputFiles/excel-from-js.xlsx';
+
+    exportEventToExcel(e, workSheetColumnName, workSheetName, filePath);
+    res.redirect('/events/list?err=0');
   }
 }
 module.exports = new EventController();

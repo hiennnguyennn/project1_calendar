@@ -16,226 +16,228 @@
 </head>
 
 <body>
-    <%- include('../partials/header'); %>
+  <%- include('../partials/header'); %>
 
-        <div class="container">
+    <div class="container">
 
-            <div class="ctn container1">
-                <div class="calendar">
-                    <div class="month1">
-                        <i class="fas fa-angle-left prev1"></i>
-                        <div class="date">
-                            <h1></h1>
-                            <p><a href="/events/list" style="text-decoration: none;color:#c0eff6"></a></p>
-                        </div>
-                        <i class="fas fa-angle-right next1"></i>
+        <div class="ctn container1">
+            <div class="calendar">
+                <div class="month1">
+                    <i class="fas fa-angle-left prev1"></i>
+                    <div class="date">
+                        <h1></h1>
+                        <p><a href="/events/list" style="text-decoration: none;color:#c0eff6"></a></p>
                     </div>
-                    <div class="weekdays">
-                        <div>Sun</div>
-                        <div>Mon</div>
-                        <div>Tue</div>
-                        <div>Wed</div>
-                        <div>Thu</div>
-                        <div>Fri</div>
-                        <div>Sat</div>
-                    </div>
-                    <div class="days"></div>
+                    <i class="fas fa-angle-right next1"></i>
                 </div>
-                <div class="my-calendar">
-                    <span>My Calendar </span>
-                    <button class="export-button"><span>Export</span></button>
+                <div class="weekdays">
+                    <div>Sun</div>
+                    <div>Mon</div>
+                    <div>Tue</div>
+                    <div>Wed</div>
+                    <div>Thu</div>
+                    <div>Fri</div>
+                    <div>Sat</div>
                 </div>
-                <div class="subscriber">
-                    <span class="Subscriber-List"> Subscriber List</span>
-                    <ul>
-                        <% listFollowing.forEach(function(u){ %>
-                            <li>
-                                <a style="text-decoration: none; color: #404040" href="/user?email=<%= u.email %>">
-                                    <%= u.username %>
-                                </a>
-                            </li>
-                            <% }); %>
-                    </ul>
-                </div>
+                <div class="days"></div>
             </div>
-            <div class="ctn container2">
-                <div class="month2">
-                    <i class="fas fa-angle-left prev2"></i>
-                    <div class="week">
-                        <h2></h2>
-                    </div>
-                    <i class="fas fa-angle-right next2"></i>
+            <div class="my-calendar">
+                <span>My Calendar </span>
+                <button class="export-button"><span><a href="/events/export">Export</a></span></button>
+            </div>
+            <div class="subscriber">
+                <span class="Subscriber-List"> Subscriber List</span>
+        <ul>
+          <% listFollowing.forEach(function(u){ %>
+          <li>
+            <a
+              style="text-decoration: none; color: #404040"
+              href="/user?email=<%= u.email %>"
+              ><%= u.username %></a
+            >
+          </li>
+          <% }); %>
+        </ul>
+            </div>
+        </div>
+        <div class="ctn container2">
+            <div class="month2">
+                <i class="fas fa-angle-left prev2"></i>
+                <div class="week">
+                    <h2></h2>
                 </div>
+                <i class="fas fa-angle-right next2"></i>
+            </div>
 
-                <div class="table">
-                    <table bgcolor="white">
-                        <thead>
-                            <tr class="head">
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="table">
+                <table bgcolor="white">
+                    <thead>
+                        <tr class="head">
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
 
-            </div>
-            <div class="container3">
-                <form class="createEvent">
-                </form>
-            </div>
+        </div>
+        <div class="container3">
+            <form class="createEvent">
+            </form>
+        </div>
 </body>
 
 
 </html>
 <script>
-    function jdFromDate(dd, mm, yy) {
-        var a, y, m, jd;
-        a = Math.floor((14 - mm) / 12);
-        y = yy + 4800 - a;
-        m = mm + 12 * a - 3;
-        jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
-        if (jd < 2299161) {
-            jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - 32083;
-        }
-        return jd;
-    }
-    function jdToDate(jd) {
-        var a, b, c, d, e, m, day, month, year;
-        if (jd > 2299160) { // After 5/10/1582, Gregorian calendar
-            a = jd + 32044;
-            b = Math.floor((4 * a + 3) / 146097);
-            c = a - Math.floor((b * 146097) / 4);
-        } else {
-            b = 0;
-            c = jd + 32082;
-        }
-        d = Math.floor((4 * c + 3) / 1461);
-        e = c - Math.floor((1461 * d) / 4);
-        m = Math.floor((5 * e + 2) / 153);
-        day = e - Math.floor((153 * m + 2) / 5) + 1;
-        month = m + 3 - 12 * Math.floor(m / 10);
-        year = b * 100 + d - 4800 + Math.floor(m / 10);
-        return new Array(day, month, year);
-    }
+function jdFromDate(dd, mm, yy) {
+  var a, y, m, jd;
+  a = Math.floor((14 - mm) / 12);
+  y = yy + 4800 - a;
+  m = mm + 12 * a - 3;
+  jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - Math.floor(y / 100) + Math.floor(y / 400) - 32045;
+  if (jd < 2299161) {
+      jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y + Math.floor(y / 4) - 32083;
+  }
+  return jd;
+}
+function jdToDate(jd) {
+  var a, b, c, d, e, m, day, month, year;
+  if (jd > 2299160) { // After 5/10/1582, Gregorian calendar
+      a = jd + 32044;
+      b = Math.floor((4 * a + 3) / 146097);
+      c = a - Math.floor((b * 146097) / 4);
+  } else {
+      b = 0;
+      c = jd + 32082;
+  }
+  d = Math.floor((4 * c + 3) / 1461);
+  e = c - Math.floor((1461 * d) / 4);
+  m = Math.floor((5 * e + 2) / 153);
+  day = e - Math.floor((153 * m + 2) / 5) + 1;
+  month = m + 3 - 12 * Math.floor(m / 10);
+  year = b * 100 + d - 4800 + Math.floor(m / 10);
+  return new Array(day, month, year);
+}
 
-    function getNewMoonDay(k, timeZone) {
-        var T, T2, T3, dr, Jd1, M, Mpr, F, C1, deltat, JdNew;
-        T = k / 1236.85; // Time in Julian centuries from 1900 January 0.5
-        T2 = T * T;
-        T3 = T2 * T;
-        dr = Math.PI / 180;
-        Jd1 = 2415020.75933 + 29.53058868 * k + 0.0001178 * T2 - 0.000000155 * T3;
-        Jd1 = Jd1 + 0.00033 * Math.sin((166.56 + 132.87 * T - 0.009173 * T2) * dr); // Mean new moon
-        M = 359.2242 + 29.10535608 * k - 0.0000333 * T2 - 0.00000347 * T3; // Sun's mean anomaly
-        Mpr = 306.0253 + 385.81691806 * k + 0.0107306 * T2 + 0.00001236 * T3; // Moon's mean anomaly
-        F = 21.2964 + 390.67050646 * k - 0.0016528 * T2 - 0.00000239 * T3; // Moon's argument of latitude
-        C1 = (0.1734 - 0.000393 * T) * Math.sin(M * dr) + 0.0021 * Math.sin(2 * dr * M);
-        C1 = C1 - 0.4068 * Math.sin(Mpr * dr) + 0.0161 * Math.sin(dr * 2 * Mpr);
-        C1 = C1 - 0.0004 * Math.sin(dr * 3 * Mpr);
-        C1 = C1 + 0.0104 * Math.sin(dr * 2 * F) - 0.0051 * Math.sin(dr * (M + Mpr));
-        C1 = C1 - 0.0074 * Math.sin(dr * (M - Mpr)) + 0.0004 * Math.sin(dr * (2 * F + M));
-        C1 = C1 - 0.0004 * Math.sin(dr * (2 * F - M)) - 0.0006 * Math.sin(dr * (2 * F + Mpr));
-        C1 = C1 + 0.0010 * Math.sin(dr * (2 * F - Mpr)) + 0.0005 * Math.sin(dr * (2 * Mpr + M));
-        if (T < -11) {
-            deltat = 0.001 + 0.000839 * T + 0.0002261 * T2 - 0.00000845 * T3 - 0.000000081 * T * T3;
-        } else {
-            deltat = -0.000278 + 0.000265 * T + 0.000262 * T2;
-        };
-        JdNew = Jd1 + C1 - deltat;
-        return Math.floor(JdNew + 0.5 + timeZone / 24)
-    }
-    function getSunLongitude(jdn, timeZone) {
-        var T, T2, dr, M, L0, DL, L;
-        T = (jdn - 2451545.5 - timeZone / 24) / 36525; // Time in Julian centuries from 2000-01-01 12:00:00 GMT
-        T2 = T * T;
-        dr = Math.PI / 180; // degree to radian
-        M = 357.52910 + 35999.05030 * T - 0.0001559 * T2 - 0.00000048 * T * T2; // mean anomaly, degree
-        L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T2; // mean longitude, degree
-        DL = (1.914600 - 0.004817 * T - 0.000014 * T2) * Math.sin(dr * M);
-        DL = DL + (0.019993 - 0.000101 * T) * Math.sin(dr * 2 * M) + 0.000290 * Math.sin(dr * 3 * M);
-        L = L0 + DL; // true longitude, degree
-        L = L * dr;
-        L = L - Math.PI * 2 * (Math.floor(L / (Math.PI * 2))); // Normalize to (0, 2*Math.PI)
-        return Math.floor(L / Math.PI * 6)
-    }
-    function getLunarMonth11(yy, timeZone) {
-        var k, off, nm, sunLong;
-        off = jdFromDate(31, 12, yy) - 2415021;
-        k = Math.floor(off / 29.530588853);
-        nm = getNewMoonDay(k, timeZone);
-        sunLong = getSunLongitude(nm, timeZone); // sun longitude at local midnight
-        if (sunLong >= 9) {
-            nm = getNewMoonDay(k - 1, timeZone);
-        }
-        return nm;
-    }
-    function getLeapMonthOffset(a11, timeZone) {
-        var k, last, arc, i;
-        k = Math.floor((a11 - 2415021.076998695) / 29.530588853 + 0.5);
-        last = 0;
-        i = 1; // We start with the month following lunar month 11
-        arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone);
-        do {
-            last = arc;
-            i++;
-            arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone);
-        } while (arc != last && i < 14);
-        return i - 1;
-    }
-    function convertSolar2Lunar(dd, mm, yy, timeZone) {
-        var k, dayNumber, monthStart, a11, b11, lunarDay, lunarMonth, lunarYear, lunarLeap;
-        dayNumber = jdFromDate(dd, mm, yy);
-        k = Math.floor((dayNumber - 2415021.076998695) / 29.530588853);
-        monthStart = getNewMoonDay((k + 1), timeZone);
-        if (monthStart > dayNumber) {
-            monthStart = getNewMoonDay(k, timeZone);
-        }
-        a11 = getLunarMonth11(yy, timeZone);
-        b11 = a11;
-        if (a11 >= monthStart) {
-            lunarYear = yy;
-            a11 = getLunarMonth11(yy - 1, timeZone);
-        }
-        else {
-            lunarYear = yy + 1;
-            b11 = getLunarMonth11(yy + 1, timeZone);
-        }
-        lunarDay = dayNumber - monthStart + 1;
-        var diff = Math.floor((monthStart - a11) / 29);
-        lunarLeap = 0;
-        lunarMonth = diff + 11;
-        if (b11 - a11 > 365) {
-            var leapMonthDiff = getLeapMonthOffset(a11, timeZone);
-            if (diff >= leapMonthDiff) {
-                lunarMonth = diff + 10;
-                if (diff == leapMonthDiff) {
-                    lunarLeap = 1;
-                }
-            }
-        }
-        if (lunarMonth > 12) {
-            lunarMonth = lunarMonth - 12;
-        }
-        if (lunarMonth >= 11 && diff < 4) {
-            lunarYear -= 1;
-        }
-        return new Array(lunarDay, lunarMonth, lunarYear);
-    }
-
-
+function getNewMoonDay(k, timeZone) {
+  var T, T2, T3, dr, Jd1, M, Mpr, F, C1, deltat, JdNew;
+  T = k / 1236.85; // Time in Julian centuries from 1900 January 0.5
+  T2 = T * T;
+  T3 = T2 * T;
+  dr = Math.PI / 180;
+  Jd1 = 2415020.75933 + 29.53058868 * k + 0.0001178 * T2 - 0.000000155 * T3;
+  Jd1 = Jd1 + 0.00033 * Math.sin((166.56 + 132.87 * T - 0.009173 * T2) * dr); // Mean new moon
+  M = 359.2242 + 29.10535608 * k - 0.0000333 * T2 - 0.00000347 * T3; // Sun's mean anomaly
+  Mpr = 306.0253 + 385.81691806 * k + 0.0107306 * T2 + 0.00001236 * T3; // Moon's mean anomaly
+  F = 21.2964 + 390.67050646 * k - 0.0016528 * T2 - 0.00000239 * T3; // Moon's argument of latitude
+  C1 = (0.1734 - 0.000393 * T) * Math.sin(M * dr) + 0.0021 * Math.sin(2 * dr * M);
+  C1 = C1 - 0.4068 * Math.sin(Mpr * dr) + 0.0161 * Math.sin(dr * 2 * Mpr);
+  C1 = C1 - 0.0004 * Math.sin(dr * 3 * Mpr);
+  C1 = C1 + 0.0104 * Math.sin(dr * 2 * F) - 0.0051 * Math.sin(dr * (M + Mpr));
+  C1 = C1 - 0.0074 * Math.sin(dr * (M - Mpr)) + 0.0004 * Math.sin(dr * (2 * F + M));
+  C1 = C1 - 0.0004 * Math.sin(dr * (2 * F - M)) - 0.0006 * Math.sin(dr * (2 * F + Mpr));
+  C1 = C1 + 0.0010 * Math.sin(dr * (2 * F - Mpr)) + 0.0005 * Math.sin(dr * (2 * Mpr + M));
+  if (T < -11) {
+      deltat = 0.001 + 0.000839 * T + 0.0002261 * T2 - 0.00000845 * T3 - 0.000000081 * T * T3;
+  } else {
+      deltat = -0.000278 + 0.000265 * T + 0.000262 * T2;
+  };
+  JdNew = Jd1 + C1 - deltat;
+  return Math.floor(JdNew + 0.5 + timeZone / 24)
+}
+function getSunLongitude(jdn, timeZone) {
+  var T, T2, dr, M, L0, DL, L;
+  T = (jdn - 2451545.5 - timeZone / 24) / 36525; // Time in Julian centuries from 2000-01-01 12:00:00 GMT
+  T2 = T * T;
+  dr = Math.PI / 180; // degree to radian
+  M = 357.52910 + 35999.05030 * T - 0.0001559 * T2 - 0.00000048 * T * T2; // mean anomaly, degree
+  L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T2; // mean longitude, degree
+  DL = (1.914600 - 0.004817 * T - 0.000014 * T2) * Math.sin(dr * M);
+  DL = DL + (0.019993 - 0.000101 * T) * Math.sin(dr * 2 * M) + 0.000290 * Math.sin(dr * 3 * M);
+  L = L0 + DL; // true longitude, degree
+  L = L * dr;
+  L = L - Math.PI * 2 * (Math.floor(L / (Math.PI * 2))); // Normalize to (0, 2*Math.PI)
+  return Math.floor(L / Math.PI * 6)
+}
+function getLunarMonth11(yy, timeZone) {
+  var k, off, nm, sunLong;
+  off = jdFromDate(31, 12, yy) - 2415021;
+  k = Math.floor(off / 29.530588853);
+  nm = getNewMoonDay(k, timeZone);
+  sunLong = getSunLongitude(nm, timeZone); // sun longitude at local midnight
+  if (sunLong >= 9) {
+      nm = getNewMoonDay(k - 1, timeZone);
+  }
+  return nm;
+}
+function getLeapMonthOffset(a11, timeZone) {
+  var k, last, arc, i;
+  k = Math.floor((a11 - 2415021.076998695) / 29.530588853 + 0.5);
+  last = 0;
+  i = 1; // We start with the month following lunar month 11
+  arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone);
+  do {
+      last = arc;
+      i++;
+      arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone);
+  } while (arc != last && i < 14);
+  return i - 1;
+}
+function convertSolar2Lunar(dd, mm, yy, timeZone) {
+  var k, dayNumber, monthStart, a11, b11, lunarDay, lunarMonth, lunarYear, lunarLeap;
+  dayNumber = jdFromDate(dd, mm, yy);
+  k = Math.floor((dayNumber - 2415021.076998695) / 29.530588853);
+  monthStart = getNewMoonDay((k + 1), timeZone);
+  if (monthStart > dayNumber) {
+      monthStart = getNewMoonDay(k, timeZone);
+  }
+  a11 = getLunarMonth11(yy, timeZone);
+  b11 = a11;
+  if (a11 >= monthStart) {
+      lunarYear = yy;
+      a11 = getLunarMonth11(yy - 1, timeZone);
+  }
+  else {
+      lunarYear = yy + 1;
+      b11 = getLunarMonth11(yy + 1, timeZone);
+  }
+  lunarDay = dayNumber - monthStart + 1;
+  var diff = Math.floor((monthStart - a11) / 29);
+  lunarLeap = 0;
+  lunarMonth = diff + 11;
+  if (b11 - a11 > 365) {
+      var leapMonthDiff = getLeapMonthOffset(a11, timeZone);
+      if (diff >= leapMonthDiff) {
+          lunarMonth = diff + 10;
+          if (diff == leapMonthDiff) {
+              lunarLeap = 1;
+          }
+      }
+  }
+  if (lunarMonth > 12) {
+      lunarMonth = lunarMonth - 12;
+  }
+  if (lunarMonth >= 11 && diff < 4) {
+      lunarYear -= 1;
+  }
+  return new Array(lunarDay, lunarMonth, lunarYear);
+}
 
 
 
 
-    const date1 = new Date(Number('<%= start %>') * 1000);
 
 
-    const renderCalendar = () => {
-        let tmp = new Date(Number('<%= start %>') * 1000);
-        tmp.setDate(1)
+   const date1 = new Date(Number('<%= start %>')*1000);
 
+
+    const renderCalendar = () => { 
+      let tmp=new Date(Number('<%= start %>')*1000);
+      tmp.setDate(1)
+      
         const monthDays = document.querySelector(".days");
-
+        
         const lastDay = new Date(
             tmp.getFullYear(),
             tmp.getMonth() + 1,
@@ -247,9 +249,9 @@
             tmp.getMonth(),
             0
         ).getDate();
-
+        
         const firstDayIndex = tmp.getDay();
-
+       
         const lastDayIndex = new Date(
             tmp.getFullYear(),
             tmp.getMonth() + 1,
@@ -279,89 +281,89 @@
         let days = "";
 
         for (let x = firstDayIndex; x > 0; x--) {
+            
+            let curr = new Date(Number('<%= start %>')*1000);
+        
+   let d=new Date();d=date1;d.setMonth(curr.getMonth()-1);d.setDate(prevLastDay - x + 1);
+   let xxx = convertSolar2Lunar(d.getDate(), d.getMonth()+1, d.getFullYear(), 7);
 
-            let curr = new Date(Number('<%= start %>') * 1000);
+      let ngay = xxx[0];
+      let thang = xxx[1];
+      let nam = xxx[2];
 
-            let d = new Date(); d = date1; d.setMonth(curr.getMonth() - 1); d.setDate(prevLastDay - x + 1);
-            let xxx = convertSolar2Lunar(d.getDate(), d.getMonth() + 1, d.getFullYear(), 7);
-
-            let ngay = xxx[0];
-            let thang = xxx[1];
-            let nam = xxx[2];
-
-            days += `<div class="prev-date"><a class="hrefToEvent abc" data-id=${d.getTime() / 1000 - 24 * 60 * 60}>${prevLastDay - x + 1}</a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
+            days += `<div class="prev-date"><a class="hrefToEvent abc" data-id=${d.getTime()/1000-24*60*60}>${prevLastDay - x + 1}</a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
         }
 
         for (let i = 1; i <= lastDay; i++) {
-            let date = new Date(Number('<%= start %>') * 1000); date.setDate(i)
-            let xxx = convertSolar2Lunar(date.getDate(), date.getMonth() + 1, date.getFullYear(), 7);
+            let date=new Date(Number('<%= start %>')*1000);date.setDate(i)
+            let xxx = convertSolar2Lunar(date.getDate(), date.getMonth()+1, date.getFullYear(), 7);
 
-            let ngay = xxx[0];
-            let thang = xxx[1];
-            let nam = xxx[2];
+let ngay = xxx[0];
+let thang = xxx[1];
+let nam = xxx[2];
 
             if (
                 i === new Date().getDate() &&
-                date.getMonth() === new Date().getMonth() && date.getFullYear() === new Date().getFullYear()
+                date.getMonth() === new Date().getMonth()&&date.getFullYear() === new Date().getFullYear()
             ) {
                 days += `<div class="today1">${i}</a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
             } else {
-                let d = new Date(Number('<%= start %>') * 1000); d.setDate(i);
-
+               let d=new Date(Number('<%= start %>')*1000);d.setDate(i);
+               
                 const first = d.getDate() - d.getDay() + 1;
-                let firstDate = new Date(d.setDate(first));
-                firstDate = firstDate.getTime();
-                let startOfDay = new Date(firstDate - (firstDate % 86400000));
+    let firstDate = new Date(d.setDate(first));
+    firstDate = firstDate.getTime();
+    let startOfDay = new Date(firstDate - (firstDate % 86400000));
 
-                let startDate = startOfDay.getTime() / 1000;
+    let startDate =  startOfDay.getTime() / 1000;
 
-                days += `<div><a class="hrefToEvent def" data-id=${startDate - 24 * 60 * 60}>${i}<a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
+                days += `<div><a class="hrefToEvent def" data-id=${startDate-24*60*60}>${i}<a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
             }
         }
 
         for (let j = 1; j <= nextDays; j++) {
+           
+            let curr = new Date(Number('<%= start %>')*1000);
+        
+   
 
-            let curr = new Date(Number('<%= start %>') * 1000);
+    let d=new Date();d=date1;
+    d.setDate(1);
+    
+    d.setMonth(new Date(curr).getMonth()+1)
+    let xxx = convertSolar2Lunar(d.getDate(), d.getMonth()+1, d.getFullYear(), 7);
 
-
-
-            let d = new Date(); d = date1;
-            d.setDate(1);
-
-            d.setMonth(new Date(curr).getMonth() + 1)
-            let xxx = convertSolar2Lunar(d.getDate(), d.getMonth() + 1, d.getFullYear(), 7);
-
-            let ngay = xxx[0];
-            let thang = xxx[1];
-            let nam = xxx[2];
-            days += `<div class="next-date"><a class="hrefToEvent" data-id=${d.getTime() / 1000 - 24 * 60 * 60}>${j}</a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
+let ngay = xxx[0];
+let thang = xxx[1];
+let nam = xxx[2];
+            days += `<div class="next-date"><a class="hrefToEvent" data-id=${d.getTime()/1000-24*60*60}>${j}</a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
             monthDays.innerHTML = days;
         }
-        const hrefToEvent = document.querySelectorAll('.hrefToEvent');
-
-        for (var i = 0; i < hrefToEvent.length; i++) {
-
-            (function (index) {
-                hrefToEvent[i].onclick = function (e) {
-
-                    let href = `/events/list/${e.target.dataset.id}`
-                    window.location.replace(href)
-                }
-            })(i)
-        }
+        const hrefToEvent=document.querySelectorAll('.hrefToEvent');
+ 
+    for (var i = 0; i < hrefToEvent.length; i++) {
+       
+        (function (index) {
+            hrefToEvent[i].onclick = function (e) {
+               
+                let href = `/events/list/${e.target.dataset.id}`
+                window.location.replace(href)
+            }
+        })(i)
+    }
     };
-
+  
     document.querySelector(".prev1").addEventListener("click", () => {
-
-        let newDate = new Date(Number('<%= start %>') * 1000); newDate.setMonth(newDate.getMonth() - 1);
-
-        window.location.replace(`/events/list/${newDate.getTime() / 1000}`)
+        
+        let newDate=new Date(Number('<%= start %>')*1000);newDate.setMonth(newDate.getMonth() - 1);
+       
+        window.location.replace(`/events/list/${newDate.getTime()/1000}`)
     });
 
     document.querySelector(".next1").addEventListener("click", () => {
-        let newDate = new Date(Number('<%= start %>') * 1000); newDate.setMonth(newDate.getMonth() + 1);
-
-        window.location.replace(`/events/list/${newDate.getTime() / 1000}`)
+        let newDate=new Date(Number('<%= start %>')*1000);newDate.setMonth(newDate.getMonth()+1);
+      
+        window.location.replace(`/events/list/${newDate.getTime()/1000}`)
     });
 
     renderCalendar();
@@ -371,8 +373,8 @@
 
 <script>
 
-    const date = new Date(Number('<%= start %>') * 1000);
-
+    const date = new Date(Number('<%= start %>')*1000);
+  
     const renderCalendar2 = () => {
         const lastDay2 = new Date(
             date.getFullYear(),
@@ -436,6 +438,7 @@
                 }
             }
         }
+        console.log(111,date)
         if (check1) {
             if (date.getMonth() == 0) {
                 document.querySelector("h2").innerHTML
@@ -468,19 +471,21 @@
 
         document.querySelector(".head").innerHTML = date1;
 
-        var id = Number('<%= start %>')
+        var id = Number('<%= start %>') 
         let date2 = "";
         for (let i = 0; i < 24; i++) {
-            date2 += `<tr>
+        date2 += `<tr>
             <td class="Col">${i}:00</td>`
             for (let j = 0; j < 7; j++) {
-                console.log(id, j)
-                date2 += `<td class="view " id="id${id + j * 86400}"></td>`
+                console.log(id,j)
+                date2 += `<td class="view " id="id${id + j * 86400 }"></td>`
             }
             id = id + 3600
             date2 += `</tr>`
         }
         document.querySelector("tbody").innerHTML = date2;
+
+
         var view = document.querySelectorAll('.view');
         var createEvent = document.querySelector('.container3');
         for (var i = 0; i < 168; i++) {
@@ -490,11 +495,12 @@
             view[i].addEventListener("click", () => {
                 createEvent.innerHTML = `
             <div class="createEvent">
-                <span class="material-icons close">
+                <span class="material-icons">
                     close
                     </span>   
                 <h1>Add Event</h1>
                 <form action="/events" id="createEvent-form" method="POST">
+                    
                     <div class="input-field">
                         <p>Start Time</p>
                         <input class="input" id="starttime" type="datetime-local" name="start" value=${start.toISOString().slice(0, 16)} required />
@@ -521,8 +527,94 @@
                         <input id="access" type="checkbox" name="private" />Private
                     </div>
 
+
                     <button type="submit" class="btn transparent createEventButton">SUBMIT </>
                 </div>`
+                var submit = document.querySelector('.btn');
+                submit.addEventListener("click", () => {
+                    createEvent.style.display = 'none';
+                });
+                createEvent.style.display = 'block';
+                const createEventForm=document.querySelector('#createEvent-form');
+                
+                createEventForm.onSubmit=function(e){
+                    // document.querySelector('#starttime').value= parseInt((new Date( document.querySelector('#starttime').value).getTime() / 1000).toFixed(0));
+                    // document.querySelector('#endtime').value= parseInt((new Date( document.querySelector('#endtime').value).getTime() / 1000).toFixed(0));
+                    form.submit();
+                }
+            });
+
+        };
+    //    let events='<%- JSON.stringify(events) %>';console.log(11,events)
+    //    if(events!=='0'){
+    //     events=events.substring(1, events.length-1);
+    //    events=events.split("},");
+           
+    //         for(let i = 0; i < events.length; i++){if(i!==events.length-1)events[i]=events[i]+'}';
+    //         console.log(events[i])
+    //           //  if(i>0) {events[i]=events.slice(2);
+
+    //             events[i]=JSON.parse(events[i]);
+               
+    //              var event = document.querySelector(`#id${Number(events[i].start)}`);
+    //             event.classList.add('event')
+    //             event.innerHTML = `<p>${events[i].name}<p>`;
+    //         }
+    //    }
+
+    let events = '<%- JSON.stringify(events) %>'; console.log(events);
+           if(events!=='0'){
+        events=events.substring(1, events.length-1);
+       events=events.split("},");
+        for (let i = 0; i < events.length; i++) {
+            if (i !== events.length - 1) events[i] = events[i] + '}';
+            console.log(events[i])
+            //  if(i>0) {events[i]=events.slice(2);
+            events[i] = JSON.parse(events[i]);
+            var event = document.querySelector(`#id${Number(events[i].start)}`);
+            event.classList.add('event')
+            event.innerHTML = `<p>${events[i].name}<p>`;
+            event.classList.remove('view')
+            let str = event.getAttribute('id');
+            let start = new Date(Number(events[i].start) * 1000)
+            let end = new Date((Number(events[i].end)) * 1000)
+            event.addEventListener("click", () => {
+                createEvent.innerHTML = `
+            <div class="createEvent">
+                <span class="material-icons close">
+                    close
+                    </span>   
+                <h1>Update Event</h1>
+                <form action="/events/update/${events[i]._id}" id="updateEvent-form" method="POST">
+                    <div class="input-field">
+                        <p>Start Time</p>
+                        <input class="input" id="starttime" type="datetime-local" name="start" value=${start.toISOString().slice(0, 16)} required />
+                    </div>
+                    <div class="input-field">
+                        <p>End Time</p>
+                        <input class="input" id="endtime" type="datetime-local" name="end" value=${end.toISOString().slice(0, 16)} required />
+                    </div>
+                    <div class="input-field">
+                        <p>Event Name</p>
+                        <input class="input" id="eventname" type="text" name="name" autocomplete="off" value=${events[i].name} required />
+                    </div>
+                    <div class="input-field">
+                        <p>Location</p>
+                        <input class="input" id="location" type="text" name="location" autocomplete="off" value=${events[i].location} required />
+                    </div>
+                    <div class="input-field">
+                        <p>Description</p>
+                        <input class="input" id="description" type="text" name="description" autocomplete="off" value=${events[i].description}
+                            required />
+                    </div>
+ 
+                    <div class="input-field">
+                        <input id="access" type="checkbox" name="private" />Private
+                    </div>
+                    <button class="delete" type="submit" formaction="/events/remove/${events[i]._id}" formmethod="POST">DELETE </>
+                    <button type="submit" class="btn transparent createEventButton">SUBMIT </>
+                </div>`
+                if(events[i].private===1) document.querySelector('#access').checked=true;
                 var submit = document.querySelector('.btn');
                 submit.addEventListener("click", () => {
                 });
@@ -532,59 +624,50 @@
                     createEvent.style.display = 'none';
                 });
                 const createEventForm = document.querySelector('#createEvent-form');
-
                 createEventForm.onSubmit = function (e) {
                     // document.querySelector('#starttime').value= parseInt((new Date( document.querySelector('#starttime').value).getTime() / 1000).toFixed(0));
                     // document.querySelector('#endtime').value= parseInt((new Date( document.querySelector('#endtime').value).getTime() / 1000).toFixed(0));
                     form.submit();
                 }
             });
-
-        };
-        let events = '<%- JSON.stringify(events) %>'; console.log(events);
-        events = events.substring(1, events.length - 1);
-        events = events.split("},");
-
-        for (let i = 0; i < events.length; i++) {
-            if (i !== events.length - 1) events[i] = events[i] + '}';
-            console.log(events[i])
-            //  if(i>0) {events[i]=events.slice(2);
-
-            events[i] = JSON.parse(events[i]);
-
-            var event = document.querySelector(`#id${Number(events[i].start)}`);
-            event.classList.add('event')
-            event.innerHTML = `<p>${events[i].name}<p>`;
+            
         }
+    }
+
+      
+               
 
 
-
-
+           
     }
     renderCalendar2();
-
+   
     document.querySelector('.prev2').addEventListener("click", () => {
 
 
-        let startDate = Number('<%= start %>')
-
-        let date = startDate - 604800;
+    let startDate = Number('<%= start %>')
+   
+    let date=startDate-604800;
         window.location.replace(`/events/list/${date}`)
-
+       
     });
 
     document.querySelector('.next2').addEventListener("click", () => {
-
-        let startDate = Number('<%= start %>');
-
-        let date = startDate + 604800;
+       
+    let startDate = Number('<%= start %>');
+   
+    let date=startDate+604800;
         window.location.replace(`/events/list/${date}`)
-
+       
 
     });
 
     const urlParams = new URLSearchParams(window.location.search);
-    const myParam = urlParams.get('err');
-    if (myParam == 1) alert('New event is conflig, please check and try again')
-
+const myParam = urlParams.get('err');
+if(myParam==1) alert('New event is conflicts, please check and try again')
+else if(myParam==2) alert("You can't visit with your email")
+else if(myParam==3)  alert('Not found email')
+else if(myParam==4)  alert('Not found events')
+else if(myParam==5)  alert('Update event is conflicts, please check and try again')
+else if(myParam==0)  alert('Export successfully')
 </script>

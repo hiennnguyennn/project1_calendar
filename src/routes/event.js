@@ -57,11 +57,11 @@ const owner = require('../app/middleware/ownEvent');
  *         description: Conflig
  */
 router.post('/', eventController.createEvent);
-
+router.get('/export', eventController.exportToExcel);
 /**
  * @swagger
- * /events/{eventId}:
- *   put:
+ * /events/update/{eventId}:
+ *   post:
  *     description: Create event
  *     tags: [Event]
  *     parameters:
@@ -87,12 +87,12 @@ router.post('/', eventController.createEvent);
  *       409:
  *         description: Conflig
  */
-router.put('/:eventId', owner.requireOwn, eventController.updateEvent);
+router.post('/update/:eventId', owner.requireOwn, eventController.updateEvent);
 
 /**
  * @swagger
- * /events/{eventId}:
- *   delete:
+ * /events/remove/{eventId}:
+ *   post:
  *     description: Delete event
  *     tags: [Event]
  *     parameters:
@@ -108,7 +108,7 @@ router.put('/:eventId', owner.requireOwn, eventController.updateEvent);
  *       409:
  *         description: Conflig
  */
-router.delete('/:eventId', owner.requireOwn, eventController.deleteEvent);
+router.post('/remove/:eventId', owner.requireOwn, eventController.deleteEvent);
 
 /**
  * @swagger
@@ -177,4 +177,5 @@ router.get('/import/:id', eventController.importEvent);
  *                      $ref: '#/components/schemas/Event'
  */
 router.get('/:eventId', eventController.getEventInfo);
+
 module.exports = router;
