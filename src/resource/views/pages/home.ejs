@@ -291,7 +291,7 @@ function convertSolar2Lunar(dd, mm, yy, timeZone) {
       let thang = xxx[1];
       let nam = xxx[2];
 
-            days += `<div class="prev-date"><a class="hrefToEvent abc" data-id=${d.getTime()/1000}>${prevLastDay - x + 1}</a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
+            days += `<div class="prev-date"><a class="hrefToEvent abc" data-id=${d.getTime()/1000-24*60*60}>${prevLastDay - x + 1}</a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
         }
 
         for (let i = 1; i <= lastDay; i++) {
@@ -317,7 +317,7 @@ let nam = xxx[2];
 
     let startDate =  startOfDay.getTime() / 1000;
 
-                days += `<div><a class="hrefToEvent def" data-id=${startDate}>${i}<a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
+                days += `<div><a class="hrefToEvent def" data-id=${startDate-24*60*60}>${i}<a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
             }
         }
 
@@ -336,7 +336,7 @@ let nam = xxx[2];
 let ngay = xxx[0];
 let thang = xxx[1];
 let nam = xxx[2];
-            days += `<div class="next-date"><a class="hrefToEvent" data-id=${d.getTime()/1000}>${j}</a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
+            days += `<div class="next-date"><a class="hrefToEvent" data-id=${d.getTime()/1000-24*60*60}>${j}</a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
             monthDays.innerHTML = days;
         }
         const hrefToEvent=document.querySelectorAll('.hrefToEvent');
@@ -539,11 +539,14 @@ let nam = xxx[2];
         };
        let events='<%- JSON.stringify(events) %>';console.log(events);
        events=events.substring(1, events.length-1);
-       events=events.split("}");events.pop();console.log(events.length)
+       events=events.split("},");
            
-            for(let i = 0; i < events.length; i++){events[i]=events[i]+'}';
+            for(let i = 0; i < events.length; i++){if(i!==events.length-1)events[i]=events[i]+'}';
+            console.log(events[i])
+              //  if(i>0) {events[i]=events.slice(2);
+
                 events[i]=JSON.parse(events[i]);
-                console.log(events[i],events[i]["start"])
+               
                  var event = document.querySelector(`#id${Number(events[i].start)}`);
                 event.classList.add('event')
                 event.innerHTML = `<p>${events[i].name}<p>`;
@@ -575,7 +578,8 @@ let nam = xxx[2];
 
     });
 
-    const urlSearchParams = new URLSearchParams(window.location.search);
-const params = Object.fromEntries(urlSearchParams.entries());console.log(params)
+    const urlParams = new URLSearchParams(window.location.search);
+const myParam = urlParams.get('err');
+if(myParam==1) alert('New event is conflig, please check and try again')
 
 </script>

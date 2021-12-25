@@ -15,17 +15,24 @@ class EventController {
     t = new Date(req.body.end);
     t.setHours(t.getHours() + 7);
     req.body.end = parseInt((t.getTime() / 1000).toFixed(0));
-    console.log(req.body);
+
     Event.find({ userId: req.user._id }).then((events) => {
       if (events.length > 0) {
         // var range = moment().range(req.body.start, req.body.end);
         for (var i = 0; i < events.length; i++) {
+          console.log(
+            req.body.start,
+            req.body.end,
+            events[i].start,
+            events[i].end
+          );
           if (
-            (req.body.start > events[i].start &&
-              req.body.start < events[i].end) ||
-            (req.body.end < events[i].end && req.body.end > events[i].start)
+            (req.body.start >= events[i].start &&
+              req.body.start <= events[i].end) ||
+            (req.body.end <= events[i].end && req.body.end >= events[i].start)
           ) {
             res.redirect('/events/list?err=1');
+            return;
           }
         }
       }
@@ -35,20 +42,6 @@ class EventController {
       req.body['status'] = 1;
       const e = new Event(req.body);
       e.save().then((e1) => {
-        // if (req.body.usersEmail.length > 0) {
-        //   User.find({ email: { $in: req.body.usersEmail } }).then(
-        //     async (users) => {
-        //       if (users.length > 0) {
-        //         for (var i = 0; i < users.length; i++) {
-        //           req.body['userId'] = users[i]._id;
-        //           req.body['status'] = 0;
-        //           const x = new Event(req.body);
-        //           await x.save();
-        //         }
-        //       }
-        //     }
-        //   );
-        // }
         res.redirect('/events/list');
       });
     });
@@ -60,7 +53,8 @@ class EventController {
     firstDate = firstDate.getTime();
     let startOfDay = new Date(firstDate - (firstDate % 86400000));
 
-    let startDate = req.params.date_start || startOfDay.getTime() / 1000;
+    let startDate =
+      req.params.date_start || startOfDay.getTime() / 1000 - 24 * 60 * 60;
     startDate = Number(startDate);
 
     const endDate = startDate + 604800;
