@@ -57,7 +57,7 @@ class EventController {
     firstDate = firstDate.getTime();
     let startOfDay = new Date(firstDate - (firstDate % 86400000));
 
-    let startDate = req.params.date_start || startOfDay.getTime() / 1000;
+    let startDate = req.params.date_start || startOfDay.getTime() / 1000 - 86400;
     const endDate = startDate + 604800;
 
     var result = [];

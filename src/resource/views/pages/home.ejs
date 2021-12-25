@@ -429,7 +429,7 @@ let nam = xxx[2];
                 = month[date.getMonth()] + ' ' + sunday + ' - ' + saturday + ' , ' + date.getFullYear();
         }
         document.querySelector(".head").innerHTML = date1;
-        var id = Number('<%= start %>')- 86400
+        var id = Number('<%= start %>')
         let date2 = "";
         for (let i = 0; i < 24; i++) {
         date2 += `<tr>
@@ -521,7 +521,7 @@ let nam = xxx[2];
 </script>
 <script>
     '<% events.map((event)=>{ %>'
-        let event = document.querySelector('#id<%= event.start %>')
+        var event = document.querySelector('#id<%= event.start %>')
         event.classList.add('event');
         event.innerHTML = `<p><%= event.name %><p>`
             '<% }); %>'
