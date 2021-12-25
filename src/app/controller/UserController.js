@@ -8,7 +8,7 @@ class UserController {
   }
   async profile(req, res, next) {
     if (req.query.email === req.user.email) {
-      res.redirect('/events/list?err=2');
+      res.redirect('/events/list?mess=2');
       return;
     }
     let user = await User.findOne({ email: req.query.email });
@@ -23,7 +23,7 @@ class UserController {
       if (follow && follow.status == 1)
         res.render('pages/userProfile', { u: user, follow: 1 });
       else res.render('pages/userProfile', { u: user, follow: 0 });
-    } else res.redirect('/events/list?err=3');
+    } else res.redirect('/events/list?mess=3');
     return;
   }
   async findUserWithEmail(emails) {

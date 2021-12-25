@@ -663,11 +663,13 @@ let nam = xxx[2];
     });
 
     const urlParams = new URLSearchParams(window.location.search);
-const myParam = urlParams.get('err');
+const myParam = urlParams.get('mess');
 if(myParam==1) alert('New event is conflicts, please check and try again')
 else if(myParam==2) alert("You can't visit with your email")
 else if(myParam==3)  alert('Not found email')
 else if(myParam==4)  alert('Not found events')
 else if(myParam==5)  alert('Update event is conflicts, please check and try again')
 else if(myParam==0)  alert('Export successfully')
+else if(myParam==6)  alert('Delete successfully')
+else if(myParam==7)  alert('Update successfully')
 </script>

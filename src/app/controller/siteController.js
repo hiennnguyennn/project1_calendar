@@ -8,7 +8,7 @@ class SiteController {
   register(req, res) {
     User.findOne({ email: req.body.email }).then((u) => {
       if (u) {
-        res.redirect('/register?err=0');
+        res.redirect('/register?mess=0');
         return;
       } else {
         bcrypt.genSalt(Number(process.env.SALTROUND), function (err, salt) {
@@ -62,11 +62,11 @@ class SiteController {
                 console.log(e);
               }
             } else {
-              res.redirect('/login?err=0');
+              res.redirect('/login?mess=0');
               return;
             }
           });
-        } else res.redirect('/login?err=0');
+        } else res.redirect('/login?mess=0');
       });
     }
   }

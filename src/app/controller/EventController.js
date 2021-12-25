@@ -26,7 +26,7 @@ class EventController {
               req.body.start <= events[i].end) ||
             (req.body.end <= events[i].end && req.body.end >= events[i].start)
           ) {
-            res.redirect('/events/list?err=1');
+            res.redirect('/events/list?mess=1');
             return;
           }
         }
@@ -115,7 +115,7 @@ class EventController {
                 (req.body.end <= events[i].end &&
                   req.body.end >= events[i].start)
               ) {
-                res.redirect('/events/list?err=5');
+                res.redirect('/events/list?mess=5');
                 return;
               }
             }
@@ -125,18 +125,18 @@ class EventController {
       console.log(222, req.body);
       req.body['updatedAt'] = new Date();
       await Event.updateOne({ _id: e._id }, req.body);
-      res.redirect('/events/list');
+      res.redirect('/events/list?mess=7');
     });
   }
   deleteEvent(req, res, next) {
     Event.deleteOne({ _id: req.params.eventId }).then(() => {
-      res.redirect('/events/list');
+      res.redirect('/events/list?mess=6');
     });
   }
   getEventInfo(req, res, next) {
     Event.findOne({ _id: req.params.eventId }).then((e) => {
       if (e) res.send(e);
-      else res.redirect('events/list?err=4');
+      else res.redirect('events/list?mess=4');
     });
   }
   async importEvent(req, res, next) {
