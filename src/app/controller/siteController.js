@@ -7,8 +7,10 @@ var jwt = require('jsonwebtoken');
 class SiteController {
   register(req, res) {
     User.findOne({ email: req.body.email }).then((u) => {
-      if (u) res.status(409).send('conflig');
-      else {
+      if (u) {
+        res.redirect('/register?err=0');
+        return;
+      } else {
         bcrypt.genSalt(Number(process.env.SALTROUND), function (err, salt) {
           bcrypt.hash(req.body.password, salt, function (err, hash) {
             req.body.password = hash;
@@ -55,12 +57,16 @@ class SiteController {
               console.log(111);
               try {
                 res.redirect('/events/list/');
+                return;
               } catch (e) {
                 console.log(e);
               }
-            } else res.status(401).send('wrong password');
+            } else {
+              res.redirect('/login?err=0');
+              return;
+            }
           });
-        } else res.status(404).send('account not found');
+        } else res.redirect('/login?err=0');
       });
     }
   }

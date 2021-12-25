@@ -8,7 +8,7 @@ class UserController {
   }
   async profile(req, res, next) {
     if (req.query.email === req.user.email) {
-      res.status(409).send('You cannot ');
+      res.redirect('/events/list?err=2');
       return;
     }
     let user = await User.findOne({ email: req.query.email });
@@ -23,7 +23,9 @@ class UserController {
       if (follow && follow.status == 1)
         res.render('pages/userProfile', { u: user, follow: 1 });
       else res.render('pages/userProfile', { u: user, follow: 0 });
-    } else res.status(404).send('not found');
+    }
+    res.redirect('/events/list?err=3');
+    return;
   }
   async findUserWithEmail(emails) {
     await User.find({ email: { $in: emails } }).then((users) => {
@@ -39,7 +41,7 @@ class UserController {
   }
   logout(req, res) {
     res.clearCookie('token');
-    res.send('Logout sc');
+    res.redirect('/login');
   }
   updateProfile(req, res) {
     req.body['updatedAt'] = new Date();
