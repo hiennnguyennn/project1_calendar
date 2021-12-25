@@ -315,7 +315,18 @@ ul {
   border-radius: 4px;
   padding: 5px 20px;
   color: white;
-  margin-left: 140px;
+  margin-left: 125px;
+}
+.delete{
+  text-align: center;
+  background-color: #2dc068;
+  border: none;
+  font-size: 25px;
+  border-radius: 4px;
+  padding: 5px 20px;
+  color: white;
+  
+
 }
 
 .material-icons{

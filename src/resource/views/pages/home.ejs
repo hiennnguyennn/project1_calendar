@@ -474,16 +474,90 @@
             date2 += `<tr>
             <td class="Col">${i}:00</td>`
             for (let j = 0; j < 7; j++) {
-                console.log(id, j)
                 date2 += `<td class="view " id="id${id + j * 86400}"></td>`
             }
             id = id + 3600
             date2 += `</tr>`
         }
         document.querySelector("tbody").innerHTML = date2;
+
+
+        let events = '<%- JSON.stringify(events) %>'; console.log(events);
+        events = events.substring(1, events.length - 1);
+        events = events.split("},");
+        for (let i = 0; i < events.length; i++) {
+            if (i !== events.length - 1) events[i] = events[i] + '}';
+            console.log(events[i])
+            //  if(i>0) {events[i]=events.slice(2);
+            events[i] = JSON.parse(events[i]);
+            var event = document.querySelector(`#id${Number(events[i].start)}`);
+            event.classList.add('event')
+            event.innerHTML = `<p>${events[i].name}<p>`;
+            event.classList.remove('view')
+            let str = event.getAttribute('id');
+            let start = new Date(Number(str.slice(2, str.length)) * 1000)
+            let end = new Date((Number(str.slice(2, str.length)) + 3600) * 1000)
+            event.addEventListener("click", () => {
+                createEvent.innerHTML = `
+            <div class="createEvent">
+                <span class="material-icons close">
+                    close
+                    </span>   
+                <h1>Add Event</h1>
+                <form action="/events" id="createEvent-form" method="POST">
+                    <div class="input-field">
+                        <p>Start Time</p>
+                        <input class="input" id="starttime" type="datetime-local" name="start" value=${start.toISOString().slice(0, 16)} required />
+                    </div>
+                    <div class="input-field">
+                        <p>End Time</p>
+                        <input class="input" id="endtime" type="datetime-local" name="end" value=${end.toISOString().slice(0, 16)} required />
+                    </div>
+                    <div class="input-field">
+                        <p>Event Name</p>
+                        <input class="input" id="eventname" type="text" name="name" autocomplete="off" value=${events[i].name} required />
+                    </div>
+                    <div class="input-field">
+                        <p>Location</p>
+                        <input class="input" id="location" type="text" name="location" autocomplete="off" value=${events[i].location} required />
+                    </div>
+                    <div class="input-field">
+                        <p>Description</p>
+                        <input class="input" id="description" type="text" name="description" autocomplete="off" value=${events[i].description}
+                            required />
+                    </div>
+ 
+                    <div class="input-field">
+                        <input id="access" type="checkbox" name="private" />Private
+                    </div>
+                    <button class="delete">DELETE </>
+                    <button type="submit" class="btn transparent createEventButton">SUBMIT </>
+                </div>`
+                var submit = document.querySelector('.btn');
+                submit.addEventListener("click", () => {
+                });
+                createEvent.style.display = 'block';
+                var close = document.querySelector('.close');
+                close.addEventListener("click", () => {
+                    createEvent.style.display = 'none';
+                });
+                const createEventForm = document.querySelector('#createEvent-form');
+
+                createEventForm.onSubmit = function (e) {
+                    // document.querySelector('#starttime').value= parseInt((new Date( document.querySelector('#starttime').value).getTime() / 1000).toFixed(0));
+                    // document.querySelector('#endtime').value= parseInt((new Date( document.querySelector('#endtime').value).getTime() / 1000).toFixed(0));
+                    form.submit();
+                }
+            });
+            
+        }
+        
+
+
+
         var view = document.querySelectorAll('.view');
         var createEvent = document.querySelector('.container3');
-        for (var i = 0; i < 168; i++) {
+        for (var i = 0; i < view.length; i++) {
             let str = view[i].getAttribute('id');
             let start = new Date(Number(str.slice(2, str.length)) * 1000)
             let end = new Date((Number(str.slice(2, str.length)) + 3600) * 1000)
@@ -541,21 +615,8 @@
             });
 
         };
-        let events = '<%- JSON.stringify(events) %>'; console.log(events);
-        events = events.substring(1, events.length - 1);
-        events = events.split("},");
-
-        for (let i = 0; i < events.length; i++) {
-            if (i !== events.length - 1) events[i] = events[i] + '}';
-            console.log(events[i])
-            //  if(i>0) {events[i]=events.slice(2);
-
-            events[i] = JSON.parse(events[i]);
-
-            var event = document.querySelector(`#id${Number(events[i].start)}`);
-            event.classList.add('event')
-            event.innerHTML = `<p>${events[i].name}<p>`;
-        }
+        
+        
 
 
 
