@@ -119,7 +119,6 @@ function jdToDate(jd) {
   year = b * 100 + d - 4800 + Math.floor(m / 10);
   return new Array(day, month, year);
 }
-
 function getNewMoonDay(k, timeZone) {
   var T, T2, T3, dr, Jd1, M, Mpr, F, C1, deltat, JdNew;
   T = k / 1236.85; // Time in Julian centuries from 1900 January 0.5
@@ -223,15 +222,7 @@ function convertSolar2Lunar(dd, mm, yy, timeZone) {
   }
   return new Array(lunarDay, lunarMonth, lunarYear);
 }
-
-
-
-
-
-
    const date1 = new Date(Number('<%= start %>')*1000);
-
-
     const renderCalendar = () => { 
       let tmp=new Date(Number('<%= start %>')*1000);
       tmp.setDate(1)
@@ -243,7 +234,6 @@ function convertSolar2Lunar(dd, mm, yy, timeZone) {
             tmp.getMonth() + 1,
             0
         ).getDate();
-
         const prevLastDay = new Date(
             tmp.getFullYear(),
             tmp.getMonth(),
@@ -257,7 +247,6 @@ function convertSolar2Lunar(dd, mm, yy, timeZone) {
             tmp.getMonth() + 1,
             0
         ).getDay();
-
         const nextDays = 7 - lastDayIndex - 1;
         const months = [
             "January",
@@ -273,35 +262,26 @@ function convertSolar2Lunar(dd, mm, yy, timeZone) {
             "November",
             "December",
         ];
-
         document.querySelector(".date h1").innerHTML = months[date1.getMonth()];
-
         document.querySelector(".date p a").innerHTML = new Date().toDateString();
-
         let days = "";
-
         for (let x = firstDayIndex; x > 0; x--) {
             
             let curr = new Date(Number('<%= start %>')*1000);
         
    let d=new Date();d=date1;d.setMonth(curr.getMonth()-1);d.setDate(prevLastDay - x + 1);
    let xxx = convertSolar2Lunar(d.getDate(), d.getMonth()+1, d.getFullYear(), 7);
-
       let ngay = xxx[0];
       let thang = xxx[1];
       let nam = xxx[2];
-
             days += `<div class="prev-date"><a class="hrefToEvent abc" data-id=${d.getTime()/1000}>${prevLastDay - x + 1}</a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
         }
-
         for (let i = 1; i <= lastDay; i++) {
             let date=new Date(Number('<%= start %>')*1000);date.setDate(i)
             let xxx = convertSolar2Lunar(date.getDate(), date.getMonth()+1, date.getFullYear(), 7);
-
 let ngay = xxx[0];
 let thang = xxx[1];
 let nam = xxx[2];
-
             if (
                 i === new Date().getDate() &&
                 date.getMonth() === new Date().getMonth()&&date.getFullYear() === new Date().getFullYear()
@@ -314,25 +294,20 @@ let nam = xxx[2];
     let firstDate = new Date(d.setDate(first));
     firstDate = firstDate.getTime();
     let startOfDay = new Date(firstDate - (firstDate % 86400000));
-
     let startDate =  startOfDay.getTime() / 1000;
-
                 days += `<div><a class="hrefToEvent def" data-id=${startDate}>${i}<a><p class=\"lunar\">${ngay}/${thang}</p></div>`;
             }
         }
-
         for (let j = 1; j <= nextDays; j++) {
            
             let curr = new Date(Number('<%= start %>')*1000);
         
    
-
     let d=new Date();d=date1;
     d.setDate(1);
     
     d.setMonth(new Date(curr).getMonth()+1)
     let xxx = convertSolar2Lunar(d.getDate(), d.getMonth()+1, d.getFullYear(), 7);
-
 let ngay = xxx[0];
 let thang = xxx[1];
 let nam = xxx[2];
@@ -359,22 +334,19 @@ let nam = xxx[2];
        
         window.location.replace(`/events/list/${newDate.getTime()/1000}`)
     });
-
     document.querySelector(".next1").addEventListener("click", () => {
         let newDate=new Date(Number('<%= start %>')*1000);newDate.setMonth(newDate.getMonth()+1);
       
         window.location.replace(`/events/list/${newDate.getTime()/1000}`)
     });
-
     renderCalendar();
 </script>
 
 
 
 <script>
-
+    
     const date = new Date(Number('<%= start %>')*1000);
-  
     const renderCalendar2 = () => {
         const lastDay2 = new Date(
             date.getFullYear(),
@@ -386,8 +358,6 @@ let nam = xxx[2];
             date.getMonth(),
             0
         ).getDate();
-
-
         const month = [
             "January",
             "February",
@@ -411,7 +381,6 @@ let nam = xxx[2];
             var i = date.getDate() - date.getDay() + j;
             if (i <= 0) {
                 date1 += `<th class="date">${prevLastDay + i}</th>`;
-
                 if (j == 0) {
                     sunday = prevLastDay + i;
                     check1 = true;
@@ -429,7 +398,6 @@ let nam = xxx[2];
                 } else {
                     date1 += `<th class="date">${i}</th>`;
                 }
-
                 if (j == 0) {
                     sunday = i;
                 }
@@ -443,34 +411,25 @@ let nam = xxx[2];
                 document.querySelector("h2").innerHTML
                     = month[(date.getMonth() + 11)] + ' ' + sunday + ' , ' + (date.getFullYear() - 1) + ' - '
                     + month[(date.getMonth()) % 12] + ' ' + saturday + ' , ' + date.getFullYear();
-
             } else {
                 document.querySelector("h2").innerHTML
                     = month[(date.getMonth() - 1) % 12] + ' ' + sunday + ' - ' + month[(date.getMonth()) % 12] + ' ' + saturday + ' , ' + date.getFullYear();
             }
-
         } else if (check2) {
             if (date.getMonth() == 11) {
                 document.querySelector("h2").innerHTML
                     = month[(date.getMonth()) % 12] + ' ' + sunday + ' , ' + date.getFullYear() + ' - '
                     + month[(date.getMonth() + 1) % 12] + ' ' + saturday + ' , ' + (date.getFullYear() + 1);
-
             } else {
                 document.querySelector("h2").innerHTML
                     = month[(date.getMonth()) % 12] + ' ' + sunday + ' - ' + month[(date.getMonth() + 1) % 12] + ' ' + saturday + ' , ' + date.getFullYear();
             }
-
-
         } else {
             document.querySelector("h2").innerHTML
                 = month[date.getMonth()] + ' ' + sunday + ' - ' + saturday + ' , ' + date.getFullYear();
         }
-
-
-
         document.querySelector(".head").innerHTML = date1;
-
-        var id = Number('<%= start %>') - 111600
+        var id = Number('<%= start %>')- 86400
         let date2 = "";
         for (let i = 0; i < 24; i++) {
         date2 += `<tr>
@@ -484,15 +443,26 @@ let nam = xxx[2];
         document.querySelector("tbody").innerHTML = date2;
         var view = document.querySelectorAll('.view');
         var createEvent = document.querySelector('.container3');
-        for (var i = 0; i < 168; i++) {
+        for (var i = 0; i < 168; i++){
+            let str = view[i].getAttribute('id');          
+            let start = new Date(Number(str.slice(2, str.length))*1000)
+            let end = new Date((Number(str.slice(2, str.length))+3600)*1000)
             view[i].addEventListener("click", () => {
                 createEvent.innerHTML = `
             <div class="createEvent">
-                <span class="material-icons">
+                <span class="material-icons close">
                     close
                     </span>   
                 <h1>Add Event</h1>
                 <form action="" id="createEvent-form" method="POST">
+                     <div class="input-field">
+                        <p>Start Time</p>
+                        <input class="input" id="starttime" type="datetime-local" name="start" value=${start.toISOString().slice(0,16)} required />
+                    </div>
+                    <div class="input-field">
+                        <p>End Time</p>
+                        <input class="input" id="endtime" type="datetime-local" name="end" value=${end.toISOString().slice(0,16)} required />
+                    </div>
                     
                     <div class="input-field">
                         <p>Event Name</p>
@@ -508,14 +478,6 @@ let nam = xxx[2];
                             required />
                     </div>
                     <div class="input-field">
-                        <p>Start Time</p>
-                        <input class="input" id="starttime" type="datetime-local" name="start" required />
-                    </div>
-                    <div class="input-field">
-                        <p>End Time</p>
-                        <input class="input" id="endtime" type="datetime-local" name="end" required />
-                    </div>
-                    <div class="input-field">
                         <input id="access" type="checkbox" name="private" />Private
                     </div>
                     <input type="submit" class="btn transparent createEventButton" value="Submit" />
@@ -524,7 +486,7 @@ let nam = xxx[2];
                 submit.addEventListener("click", () => {
                    
                 });
-                var close = document.querySelector('.material-icons');
+                var close = document.querySelector('.close');
                 close.addEventListener("click", () => {
                     createEvent.style.display = 'none';
                 });
@@ -537,47 +499,31 @@ let nam = xxx[2];
                     form.submit();
                 }
             });
-
-        };
-        var getApi = ''
-        fetch(getApi)
-            .then(function (response) {
-                return response.json();
-
-            })
-            .then(function (events) {
-            for(let i = 0; i < events.length(); i++){
-                 var event = document.querySelector(`#id${events[i].start}`);
-                event.classList.add('event')
-                event.innerHTML = `<p>${events[i].name}<p>`;
-            }
-               
-
-
-            })
+        }
+        
     }
     renderCalendar2();
    
     document.querySelector('.prev2').addEventListener("click", () => {
-
-
     let startDate = Number('<%= start %>')
    
     let date=startDate-604800;
         window.location.replace(`/events/list/${date}`)
-       
     });
-
     document.querySelector('.next2').addEventListener("click", () => {
        
     let startDate = Number('<%= start %>');
    
     let date=startDate+604800;
-        window.location.replace(`/events/list/${date}`)
-       
+    window.location.replace(`/events/list/${date}`)
 
-    });
-
-
-
+        }); 
+</script>
+<script>
+    '<% events.map((event)=>{ %>'
+        let event = document.querySelector('#id<%= event.start %>')
+        event.classList.add('event');
+        event.innerHTML = `<p><%= event.name %><p>`
+            '<% }); %>'
+        
 </script>

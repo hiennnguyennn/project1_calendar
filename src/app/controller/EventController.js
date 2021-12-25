@@ -5,6 +5,7 @@ const Moment = require('moment');
 const MomentRange = require('moment-range');
 const { VirtualType } = require('mongoose');
 const { BulkWriteResult } = require('mongodb');
+const { events } = require('../models/event');
 
 const moment = MomentRange.extendMoment(Moment);
 class EventController {
@@ -57,7 +58,6 @@ class EventController {
     let startOfDay = new Date(firstDate - (firstDate % 86400000));
 
     let startDate = req.params.date_start || startOfDay.getTime() / 1000;
-
     const endDate = startDate + 604800;
 
     var result = [];
