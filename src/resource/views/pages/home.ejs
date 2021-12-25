@@ -470,13 +470,14 @@ let nam = xxx[2];
 
         document.querySelector(".head").innerHTML = date1;
 
-        var id = Number('<%= start %>') - 111600
+        var id = Number('<%= start %>') 
         let date2 = "";
         for (let i = 0; i < 24; i++) {
         date2 += `<tr>
             <td class="Col">${i}:00</td>`
             for (let j = 0; j < 7; j++) {
-                date2 += `<td class="view " id="id${id + j * 86400}"></td>`
+                console.log(id,j)
+                date2 += `<td class="view " id="id${id + j * 86400 }"></td>`
             }
             id = id + 3600
             date2 += `</tr>`
@@ -492,7 +493,7 @@ let nam = xxx[2];
                     close
                     </span>   
                 <h1>Add Event</h1>
-                <form action="" id="createEvent-form" method="POST">
+                <form action="/events" id="createEvent-form" method="POST">
                     
                     <div class="input-field">
                         <p>Event Name</p>
@@ -518,43 +519,39 @@ let nam = xxx[2];
                     <div class="input-field">
                         <input id="access" type="checkbox" name="private" />Private
                     </div>
-                    <input type="submit" class="btn transparent createEventButton" value="Submit" />
+
+                    <button type="submit" class="btn transparent createEventButton">SUBMIT </>
                 </div>`
                 var submit = document.querySelector('.btn');
                 submit.addEventListener("click", () => {
-                   
-                });
-                var close = document.querySelector('.material-icons');
-                close.addEventListener("click", () => {
                     createEvent.style.display = 'none';
                 });
                 createEvent.style.display = 'block';
                 const createEventForm=document.querySelector('#createEvent-form');
                 
                 createEventForm.onSubmit=function(e){
-                    document.querySelector('#starttime').value= parseInt((new Date( document.querySelector('#starttime').value).getTime() / 1000).toFixed(0));
-                    document.querySelector('#endtime').value= parseInt((new Date( document.querySelector('#endtime').value).getTime() / 1000).toFixed(0));
+                    // document.querySelector('#starttime').value= parseInt((new Date( document.querySelector('#starttime').value).getTime() / 1000).toFixed(0));
+                    // document.querySelector('#endtime').value= parseInt((new Date( document.querySelector('#endtime').value).getTime() / 1000).toFixed(0));
                     form.submit();
                 }
             });
 
         };
-        var getApi = ''
-        fetch(getApi)
-            .then(function (response) {
-                return response.json();
-
-            })
-            .then(function (events) {
-            for(let i = 0; i < events.length(); i++){
-                 var event = document.querySelector(`#id${events[i].start}`);
+       let events='<%- JSON.stringify(events) %>';console.log(events);
+       events=events.substring(1, events.length-1);
+       events=events.split("}");events.pop();console.log(events.length)
+           
+            for(let i = 0; i < events.length; i++){events[i]=events[i]+'}';
+                events[i]=JSON.parse(events[i]);
+                console.log(events[i],events[i]["start"])
+                 var event = document.querySelector(`#id${Number(events[i].start)}`);
                 event.classList.add('event')
                 event.innerHTML = `<p>${events[i].name}<p>`;
             }
                
 
 
-            })
+           
     }
     renderCalendar2();
    
@@ -578,6 +575,7 @@ let nam = xxx[2];
 
     });
 
-
+    const urlSearchParams = new URLSearchParams(window.location.search);
+const params = Object.fromEntries(urlSearchParams.entries());console.log(params)
 
 </script>

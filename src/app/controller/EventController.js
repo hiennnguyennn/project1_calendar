@@ -9,19 +9,23 @@ const { BulkWriteResult } = require('mongodb');
 const moment = MomentRange.extendMoment(Moment);
 class EventController {
   createEvent(req, res, next) {
-    // req.body.start = new Date(req.body.start);
-    // req.body.end = new Date(req.body.end);
+    let t = new Date(req.body.start);
+    t.setHours(t.getHours() + 7);
+    req.body.start = parseInt((t.getTime() / 1000).toFixed(0));
+    t = new Date(req.body.end);
+    t.setHours(t.getHours() + 7);
+    req.body.end = parseInt((t.getTime() / 1000).toFixed(0));
+    console.log(req.body);
     Event.find({ userId: req.user._id }).then((events) => {
       if (events.length > 0) {
         // var range = moment().range(req.body.start, req.body.end);
         for (var i = 0; i < events.length; i++) {
           if (
             (req.body.start > events[i].start &&
-              req.body.start > events[i].end) ||
+              req.body.start < events[i].end) ||
             (req.body.end < events[i].end && req.body.end > events[i].start)
           ) {
-            res.status(409).send('conflig');
-            return;
+            res.redirect('/events/list?err=1');
           }
         }
       }
@@ -45,7 +49,7 @@ class EventController {
         //     }
         //   );
         // }
-        res.send(e1);
+        res.redirect('/events/list');
       });
     });
   }
@@ -57,9 +61,10 @@ class EventController {
     let startOfDay = new Date(firstDate - (firstDate % 86400000));
 
     let startDate = req.params.date_start || startOfDay.getTime() / 1000;
+    startDate = Number(startDate);
 
     const endDate = startDate + 604800;
-
+    console.log(startDate, endDate);
     var result = [];
     Event.find({ userId: req.user._id }).then((events) => {
       if (events.length > 0) {
@@ -86,7 +91,12 @@ class EventController {
       );
       listFollowing.push(user);
     }
-    console.log(11111111, result);
+    console.log(11111111, {
+      user: u,
+      listFollowing: listFollowing,
+      start: startDate,
+      events: result,
+    });
     res.render('pages/home', {
       user: u,
       listFollowing: listFollowing,
