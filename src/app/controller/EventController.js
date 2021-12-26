@@ -10,6 +10,8 @@ const exportEventToExcel = require('../middleware/exportService');
 const moment = MomentRange.extendMoment(Moment);
 class EventController {
   async createEvent(req, res, next) {
+    let backURL = req.header('Referer') || '/';
+    backURL = backURL.slice(21);
     let t = new Date(req.body.start);
     t.setHours(t.getHours() + 7);
     req.body.start = parseInt((t.getTime() / 1000).toFixed(0));
@@ -26,7 +28,7 @@ class EventController {
               req.body.start <= events[i].end) ||
             (req.body.end <= events[i].end && req.body.end >= events[i].start)
           ) {
-            res.redirect('/events/list?mess=1');
+            res.redirect(`${backURL}?mess=1`);
             return;
           }
         }
@@ -37,7 +39,7 @@ class EventController {
       req.body['status'] = 1;
       const e = new Event(req.body);
       e.save().then((e1) => {
-        res.redirect('/events/list');
+        res.redirect(`${backURL}?mess=8`);
       });
     });
   }
@@ -94,6 +96,8 @@ class EventController {
     });
   }
   async updateEvent(req, res, next) {
+    let backURL = req.header('Referer') || '/';
+    backURL = backURL.slice(21);
     req.body.private = req.body.private ? 1 : 0;
     let t = new Date(req.body.start);
     t.setHours(t.getHours() + 7);
@@ -115,7 +119,7 @@ class EventController {
                 (req.body.end <= events[i].end &&
                   req.body.end >= events[i].start)
               ) {
-                res.redirect('/events/list?mess=5');
+                res.redirect(`${backURL}?mess=5`);
                 return;
               }
             }
@@ -125,20 +129,17 @@ class EventController {
       console.log(222, req.body);
       req.body['updatedAt'] = new Date();
       await Event.updateOne({ _id: e._id }, req.body);
-      res.redirect('/events/list?mess=7');
+      res.redirect(`${backURL}?mess=7`);
     });
   }
   deleteEvent(req, res, next) {
+    let backURL = req.header('Referer') || '/';
+    backURL = backURL.slice(21);
     Event.deleteOne({ _id: req.params.eventId }).then(() => {
-      res.redirect('/events/list?mess=6');
+      res.redirect(`${backURL}?mess=6`);
     });
   }
-  getEventInfo(req, res, next) {
-    Event.findOne({ _id: req.params.eventId }).then((e) => {
-      if (e) res.send(e);
-      else res.redirect('events/list?mess=4');
-    });
-  }
+
   async importEvent(req, res, next) {
     const e = await Event.findOne({ _id: req.params.id });
 
@@ -180,6 +181,8 @@ class EventController {
     }
   }
   async exportToExcel(req, res, next) {
+    let backURL = req.header('Referer') || '/';
+    backURL = backURL.slice(21);
     let e = await Event.find({ userId: req.user._id });
     for (var i = 0; i < e.length; i++) {
       e[i].start = new Date(Number(e[i].start) * 1000).toISOString();
@@ -210,7 +213,7 @@ class EventController {
     const filePath = './outputFiles/excel-from-js.xlsx';
 
     exportEventToExcel(e, workSheetColumnName, workSheetName, filePath);
-    res.redirect('/events/list?err=0');
+    res.redirect(`${backURL}?mess=0`);
   }
 }
 module.exports = new EventController();

@@ -8,7 +8,9 @@ class UserController {
   }
   async profile(req, res, next) {
     if (req.query.email === req.user.email) {
-      res.redirect('/events/list?mess=2');
+      let backURL = req.header('Referer') || '/';
+      backURL = backURL.slice(21);
+      res.redirect(`${backURL}?mess=2`);
       return;
     }
     let user = await User.findOne({ email: req.query.email });
@@ -32,7 +34,7 @@ class UserController {
       const endDate = startDate + 604800;
 
       var result = [];
-      await Event.find({ userId: user._id }).then((events) => {
+      await Event.find({ userId: user._id, private: 0 }).then((events) => {
         if (events.length > 0) {
           for (var i = 0; i < events.length; i++) {
             if (
@@ -53,10 +55,20 @@ class UserController {
       });
       console.log(result);
       if (follow && follow.status == 1)
-        res.render('pages/userProfile', { u: user, follow: 1, events: result,start: startDate });
+        res.render('pages/userProfile', {
+          u: user,
+          follow: 1,
+          events: result,
+          start: startDate,
+        });
       else
-        res.render('pages/userProfile', { u: user, follow: 0, events: result,start: startDate });
-    } else res.redirect('/events/list?mess=3');
+        res.render('pages/userProfile', {
+          u: user,
+          follow: 0,
+          events: result,
+          start: startDate,
+        });
+    } else res.redirect(`${backURL}?mess=3`);
     return;
   }
   async findUserWithEmail(emails) {

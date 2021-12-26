@@ -155,27 +155,5 @@ router.get('/list/:date_start*?', eventController.getEvent);
  *         description: Conflig
  */
 router.get('/import/:id', eventController.importEvent);
-/**
- * @swagger
- * /events/{eventId}:
- *   get:
- *     description: Event detail
- *     tags: [Event]
- *     parameters:
- *       - in: path
- *         name: eventId
- *         schema:
- *              type: number
- *         required: true
- *         description: Event id
- *     responses:
- *       200:
- *         description: Created successfully
- *         content:
- *              application/json:
- *                  schema:
- *                      $ref: '#/components/schemas/Event'
- */
-router.get('/:eventId', eventController.getEventInfo);
 
 module.exports = router;
