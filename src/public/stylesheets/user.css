@@ -194,3 +194,15 @@ form button:hover {
   color: white;
   margin-left: 140px;
 }
+.Event span:hover {
+  border: 1px solid #777;
+  cursor: pointer;
+}
+.Event button:hover {
+  border: 1px solid #777;
+  cursor: pointer;
+}
+tbody td:hover:not(.view) {
+  border: 1px solid #777;
+  cursor: pointer;
+}

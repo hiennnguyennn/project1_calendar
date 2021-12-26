@@ -567,7 +567,9 @@ let nam = xxx[2];
             if (i !== events.length - 1) events[i] = events[i] + '}';
           
             events[i] = JSON.parse(events[i]);
-            var event = document.querySelector(`#id${Number(events[i].start)}`);
+            var timeid = Number(events[i].start)
+            while(timeid < events[i].end){
+            var event = document.querySelector(`#id${timeid}`);
             event.classList.add('event')
             event.innerHTML = `<p>${events[i].name}<p>`;
             event.classList.remove('view')
@@ -628,7 +630,8 @@ let nam = xxx[2];
                     form.submit();
                 }
             });
-            
+            timeid = timeid + 3600;
+            }
         }
     }
 

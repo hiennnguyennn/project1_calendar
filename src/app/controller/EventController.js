@@ -81,7 +81,7 @@ class EventController {
     if (result.length === 0) result = 0;
 
     const u = await User.findOne({ _id: req.user._id });
-    let follow = await Follow.find({ user1: req.user._id, status: 1 });
+    let follow = await Follow.find({ userId1: req.user._id, status: 1 });
 
     let listFollowing = [];
     for (var i = 0; i < follow.length; i++) {
@@ -92,7 +92,7 @@ class EventController {
       );
       listFollowing.push(user);
     }
-
+    console.log(listFollowing)
     res.render('pages/home', {
       user: u,
       listFollowing: listFollowing,

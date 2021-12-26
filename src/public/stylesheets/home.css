@@ -357,3 +357,11 @@ tbody td:hover:not(.Col) {
   border: 1px solid #777;
   cursor: pointer;
 }
+.createEvent span:hover {
+  border: 1px solid #777;
+  cursor: pointer;
+}
+.createEvent button:hover {
+  border: 1px solid #777;
+  cursor: pointer;
+}
