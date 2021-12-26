@@ -54,7 +54,7 @@ class SiteController {
                 }
               );
               res.cookie('token', token);
-              console.log(111);
+
               try {
                 res.redirect('/events/list/');
                 return;
@@ -79,21 +79,5 @@ class SiteController {
   default(req, res, next) {
     res.render('pages/login');
   }
-  // async home(req, res, next) {
-  //   const u = await User.findOne({ _id: req.user._id });
-  //   let follow = await Follow.find({ user1: req.user._id, status: 1 });
-
-  //   let listFollowing = [];
-  //   for (var i = 0; i < follow.length; i++) {
-  //     let user = await User.findOne({ _id: follow[i].userId2 });
-  //     user = Object.assign(
-  //       {},
-  //       { username: user.username, _id: user._id, email: user.email }
-  //     );
-  //     listFollowing.push(user);
-  //   }
-  //   console.log(listFollowing);
-  //   res.redirect('events/list');
-  // }
 }
 module.exports = new SiteController();

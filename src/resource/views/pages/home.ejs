@@ -450,7 +450,7 @@ let nam = xxx[2];
                 }
             }
         }
-        console.log(111,date)
+
         if (check1) {
             if (date.getMonth() == 0) {
                 document.querySelector("h2").innerHTML
@@ -550,29 +550,13 @@ let nam = xxx[2];
                 const createEventForm=document.querySelector('#createEvent-form');
                 
                 createEventForm.onSubmit=function(e){
-                    // document.querySelector('#starttime').value= parseInt((new Date( document.querySelector('#starttime').value).getTime() / 1000).toFixed(0));
-                    // document.querySelector('#endtime').value= parseInt((new Date( document.querySelector('#endtime').value).getTime() / 1000).toFixed(0));
+                   
                     form.submit();
                 }
             });
 
         };
-    //    let events='<%- JSON.stringify(events) %>';console.log(11,events)
-    //    if(events!=='0'){
-    //     events=events.substring(1, events.length-1);
-    //    events=events.split("},");
-           
-    //         for(let i = 0; i < events.length; i++){if(i!==events.length-1)events[i]=events[i]+'}';
-    //         console.log(events[i])
-    //           //  if(i>0) {events[i]=events.slice(2);
-
-    //             events[i]=JSON.parse(events[i]);
-               
-    //              var event = document.querySelector(`#id${Number(events[i].start)}`);
-    //             event.classList.add('event')
-    //             event.innerHTML = `<p>${events[i].name}<p>`;
-    //         }
-    //    }
+  
 
     
     let events = '<%- JSON.stringify(events) %>';
@@ -581,8 +565,7 @@ let nam = xxx[2];
        events=events.split("},");
         for (let i = 0; i < events.length; i++) {
             if (i !== events.length - 1) events[i] = events[i] + '}';
-            console.log(events[i])
-            //  if(i>0) {events[i]=events.slice(2);
+          
             events[i] = JSON.parse(events[i]);
             var event = document.querySelector(`#id${Number(events[i].start)}`);
             event.classList.add('event')
@@ -687,4 +670,5 @@ else if(myParam==5)  alert('Update event is conflicts, please check and try agai
 else if(myParam==0)  alert('Export successfully')
 else if(myParam==6)  alert('Delete successfully')
 else if(myParam==7)  alert('Update successfully')
+else if(myParam==8)  alert('Create successfully')
 </script>

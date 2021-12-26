@@ -49,9 +49,7 @@ app.use(
   swaggerUi.serve,
   swaggerUi.setup(specs, { explorer: true })
 );
-// app.get('/', (req, res) => {
-//   res.render('login');
-// });
+
 app.listen(process.env.PORT, () => {
   console.log('server listen on port ' + process.env.PORT + '!');
 });
