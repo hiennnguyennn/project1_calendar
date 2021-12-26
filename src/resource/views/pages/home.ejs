@@ -403,6 +403,17 @@ let nam = xxx[2];
             "November",
             "December",
         ];
+        const colors = [
+            "#a5f5c5",
+            "#bfc8fc",
+            "#ecabfa",
+            "#79f8ee",
+            "#bcddf8",
+            "#e9f3a1",
+            "#b0fcc4",
+            "#f8b8ed",
+            "#fca0a0",
+        ];
         let date1 = "<th></th>";
         var check1 = false;
         var check2 = false;
@@ -495,7 +506,7 @@ let nam = xxx[2];
             view[i].addEventListener("click", () => {
                 createEvent.innerHTML = `
             <div class="createEvent">
-                <span class="material-icons">
+                <span class="material-icons close">
                     close
                     </span>   
                 <h1>Add Event</h1>
@@ -529,9 +540,10 @@ let nam = xxx[2];
 
 
                     <button type="submit" class="btn transparent createEventButton">SUBMIT </>
-                </div>`
-                var submit = document.querySelector('.btn');
-                submit.addEventListener("click", () => {
+                </div>
+            </form>`
+                var close = document.querySelector('.close');
+                close.addEventListener("click", () => {
                     createEvent.style.display = 'none';
                 });
                 createEvent.style.display = 'block';
@@ -563,7 +575,7 @@ let nam = xxx[2];
     //    }
 
     
-    let events = '<%- JSON.stringify(events) %>'; console.log(events);
+    let events = '<%- JSON.stringify(events) %>';
            if(events!=='0'){
         events=events.substring(1, events.length-1);
        events=events.split("},");
@@ -576,6 +588,7 @@ let nam = xxx[2];
             event.classList.add('event')
             event.innerHTML = `<p>${events[i].name}<p>`;
             event.classList.remove('view')
+            event.style.background = colors[i%9];
             let str = event.getAttribute('id');
             let start = new Date(Number(events[i].start) * 1000)
             let end = new Date((Number(events[i].end)) * 1000)
@@ -614,7 +627,8 @@ let nam = xxx[2];
                     </div>
                     <button class="delete" type="submit" formaction="/events/remove/${events[i]._id}" formmethod="POST">DELETE </>
                     <button type="submit" class="btn transparent createEventButton">SUBMIT </>
-                </div>`
+                </div>
+            </form>`
                 if(events[i].private===1) document.querySelector('#access').checked=true;
                 var submit = document.querySelector('.btn');
                 submit.addEventListener("click", () => {
