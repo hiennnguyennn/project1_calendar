@@ -53,6 +53,7 @@
             <a
               style="text-decoration: none; color: #404040"
               href="/user?email=<%= u.email %>"
+              class="following"
               ><%= u.username %></a
             >
           </li>
@@ -477,7 +478,6 @@ let nam = xxx[2];
         date2 += `<tr>
             <td class="Col">${i}:00</td>`
             for (let j = 0; j < 7; j++) {
-                console.log(id,j)
                 date2 += `<td class="view " id="id${id + j * 86400 }"></td>`
             }
             id = id + 3600
@@ -562,6 +562,7 @@ let nam = xxx[2];
     //         }
     //    }
 
+    
     let events = '<%- JSON.stringify(events) %>'; console.log(events);
            if(events!=='0'){
         events=events.substring(1, events.length-1);

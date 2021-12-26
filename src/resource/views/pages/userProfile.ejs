@@ -62,7 +62,7 @@
 
 <script>
   const date = new Date();
-  const name = "<%= u.username  %>"; console.log(name)
+  let id = Number('<%= start %>')
   const renderCalendar = () => {
     const lastDay = new Date(
       date.getFullYear(),
@@ -159,26 +159,34 @@
     document.querySelector(".head").innerHTML = date1;
 
     let date2 = "";
+    var newid = id
     for (let i = 0; i < 24; i++) {
       date2 += `<tr>
             <td class="Col">${i}:00</td>`
       for (let j = 0; j < 7; j++) {
-        date2 += `<td class="view " ></td>`
+        date2 += `<td class="view " id="id${newid + j * 86400}"></td>`
       }
+      newid = newid + 3600
       date2 += `</tr>`
     }
     document.querySelector("tbody").innerHTML = date2;
-
+    '<% events.map((event)=>{ %>'
+        var event = document.querySelector('#id<%= event.start %>')
+           event.classList.add('event');
+        event.innerHTML = `<p><%= event.name %><p>`
+            '<% }); %>'
   };
   renderCalendar();
 
   document.querySelector('.prev').addEventListener("click", () => {
     date.setDate(date.getDate() - 7);
+    id = id - 604800;
     renderCalendar();
   });
 
   document.querySelector('.next').addEventListener("click", () => {
     date.setDate(date.getDate() + 7);
+    id = id + 604800;
     renderCalendar();
   });
 
