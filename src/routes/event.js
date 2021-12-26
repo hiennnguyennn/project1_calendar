@@ -135,25 +135,6 @@ router.post('/remove/:eventId', owner.requireOwn, eventController.deleteEvent);
  */
 router.get('/list/:date_start*?', eventController.getEvent);
 
-/**
- * @swagger
- * /events/import/{id}:
- *   get:
- *     description: List events in 7 day
- *     tags: [Event]
- *     parameters:
- *       - in: path
- *         name: id
- *         schema:
- *              type: number
- *         required: true
- *         description: Event id to import
- *     responses:
- *       201:
- *         description: Imported
- *       409:
- *         description: Conflig
- */
-router.get('/import/:id', eventController.importEvent);
+router.post('/import/:id*?', eventController.importEvent);
 
 module.exports = router;

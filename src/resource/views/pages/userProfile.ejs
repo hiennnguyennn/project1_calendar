@@ -190,8 +190,7 @@
        events=events.split("},");
         for (let i = 0; i < events.length; i++) {
             if (i !== events.length - 1) events[i] = events[i] + '}';
-            console.log(events[i])
-            //  if(i>0) {events[i]=events.slice(2);
+        
             events[i] = JSON.parse(events[i]);
             var event = document.querySelector(`#id${Number(events[i].start)}`);
             event.classList.add('event')
@@ -208,7 +207,7 @@
                     close
                     </span>   
                 <h1>Event</h1>
-                <form action="" id="Event-form" method="POST">
+                <form action="/events/import/${events[i]._id}" id="Event-form" method="POST">
                     <div class="input-field">
                         <p>Start Time</p>
                         <input class="input" id="starttime" type="datetime-local" name="start" value=${start.toISOString().slice(0, 16)} disabled />
@@ -255,13 +254,9 @@
     button.innerHTML = `Unfollow`;
   }
   else if (follow === 0) button.innerHTML = `Follow`;
-// button.addEventListener("click", () => {
-//   if (button.innerHTML == 'Follow') {
-//     button.innerHTML = `Unfollow`;
-//     button.style.backgroundColor = 'rgba(45, 192, 104, 0.6)';
-//   } else {
-//     button.innerHTML = `Follow`;
-//     button.style.backgroundColor = 'rgba(45, 192, 104, 1)'
-//   }
-// });
+
+const urlParams = new URLSearchParams(window.location.search);
+  const myParam = urlParams.get('mess');
+  if (myParam == 0) alert('Import event is conflict with your events, please check and try again ');
+  else if(myParam==1) alert('Import event successfully ');
 </script>
