@@ -61,3 +61,7 @@
 .header a {
   text-decoration: none !important;
 }
+ul a:hover:not(.following) {
+  border: 1px solid #777;
+  cursor: pointer;
+}

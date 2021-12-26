@@ -337,7 +337,8 @@ ul {
 
 /* css event */
 .event {
-  background-color: #c0eff6;
+  --main-bg-color: #c0eff6;
+  background-color: var(--main-bg-color);
   font-family: Poppins;
   color: #619cd8;
 }
@@ -348,5 +349,13 @@ ul {
 
 tbody td:hover:not(.Col) {
   border: 2px solid #777;
+  cursor: pointer;
+}
+.my-calendar button:hover {
+  border: 1px solid #777;
+  cursor: pointer;
+}
+.subscriber li:hover {
+  border: 1px solid #777;
   cursor: pointer;
 }

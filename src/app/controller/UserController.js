@@ -53,9 +53,9 @@ class UserController {
       });
       console.log(result);
       if (follow && follow.status == 1)
-        res.render('pages/userProfile', { u: user, follow: 1, events: result });
+        res.render('pages/userProfile', { u: user, follow: 1, events: result,start: startDate });
       else
-        res.render('pages/userProfile', { u: user, follow: 0, events: result });
+        res.render('pages/userProfile', { u: user, follow: 0, events: result,start: startDate });
     } else res.redirect('/events/list?mess=3');
     return;
   }
