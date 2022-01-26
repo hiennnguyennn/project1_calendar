@@ -92,7 +92,7 @@ class EventController {
       );
       listFollowing.push(user);
     }
-    console.log(listFollowing)
+    console.log(listFollowing);
     res.render('pages/home', {
       user: u,
       listFollowing: listFollowing,
@@ -112,31 +112,32 @@ class EventController {
     t = new Date(req.body.end);
     t.setHours(t.getHours() + 7);
     req.body.end = parseInt((t.getTime() / 1000).toFixed(0));
-
-    await Event.findOne({ _id: req.params.eventId }).then(async (e) => {
-      if (req.body.start != e.start || req.body.end != e.end) {
-        await Event.find({ userId: req.user._id }).then((events) => {
-          if (events.length > 0) {
-            // var range = moment().range(req.body.start, req.body.end);
-            for (var i = 0; i < events.length; i++) {
-              if (
-                (req.body.start >= events[i].start &&
-                  req.body.start < events[i].end) ||
-                (req.body.end <= events[i].end &&
-                  req.body.end > events[i].start)
-              ) {
+    console.log(11, req.body);
+    let e = await Event.findOne({ _id: req.params.eventId });
+    if (req.body.start != e.start || req.body.end != e.end) {
+      await Event.find({ userId: req.user._id }).then((events) => {
+        if (events.length > 0) {
+          // var range = moment().range(req.body.start, req.body.end);
+          for (var i = 0; i < events.length; i++) {
+            if (
+              (req.body.start >= events[i].start &&
+                req.body.start < events[i].end) ||
+              (req.body.end <= events[i].end && req.body.end > events[i].start)
+            ) {
+              if (events[i]._id != e._id) {
+                console.log(222, events[i]._id != e._id, events[i]._id, e._id);
                 res.redirect(`${backURL}?mess=5`);
                 return;
               }
             }
           }
-        });
-      }
+        }
+      });
+    }
 
-      req.body['updatedAt'] = new Date();
-      await Event.updateOne({ _id: e._id }, req.body);
-      res.redirect(`${backURL}?mess=7`);
-    });
+    req.body['updatedAt'] = new Date();
+    await Event.updateOne({ _id: e._id }, req.body);
+    res.redirect(`${backURL}?mess=7`);
   }
   deleteEvent(req, res, next) {
     let backURL = req.header('Referer') || '/events/list';
